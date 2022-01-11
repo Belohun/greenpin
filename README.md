@@ -11,7 +11,7 @@ This is repository for mobile app development.
 
 - Get packages - flutter pub get
 - Build generated code - flutter pub run build_runner build
-- Generate translated keys - fvm flutter pub run easy_localization:generate --source-dir ./assets/translations -f keys -o local_keys.g.dart
+- Generate translated keys - flutter pub run easy_localization:generate --source-dir ./assets/translations -f keys -o local_keys.g.dart
 
 ## Run
 

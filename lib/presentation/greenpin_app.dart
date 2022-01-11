@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:greenpin/core/app_constants.dart';
 import 'package:greenpin/exports.dart';
-import 'package:greenpin/presentation/routing/main_router.gr.dart';
+import 'package:greenpin/presentation/style/light_style.dart';
 
 class GreenpinApp extends HookWidget {
   const GreenpinApp({
@@ -18,6 +18,7 @@ class GreenpinApp extends HookWidget {
       title: AppConstants.appName,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
+      theme: lightTheme,
       locale: context.locale,
       routeInformationParser: mainRouter.defaultRouteParser(),
       routerDelegate: mainRouter.delegate(),
