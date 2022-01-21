@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:greenpin/exports.dart';
-import 'package:greenpin/presentation/home_page/cubit/home_page_cubit.dart';
+import 'package:greenpin/presentation/page/home_page/cubit/home_page_cubit.dart';
 import 'package:greenpin/presentation/widget/cubit_hooks.dart';
 
 class HomePage extends HookWidget {

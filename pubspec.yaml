@@ -39,6 +39,8 @@ dependencies:
   dio: 4.0.4
   retrofit: 3.0.1
   pedantic: 1.11.1
+  top_snackbar_flutter: 1.0.0
+
 
 dev_dependencies:
   flutter_test:
@@ -60,5 +62,6 @@ flutter:
   assets:
     - assets/translations/en.json
     - assets/translations/pl.json
+    - assets/img/
 
 

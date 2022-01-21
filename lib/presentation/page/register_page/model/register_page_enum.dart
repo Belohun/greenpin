@@ -1,0 +1,4 @@
+enum RegisterPageEnum {
+  firstStep,
+  secondStep,
+}
