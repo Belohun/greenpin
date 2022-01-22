@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:greenpin/exports.dart';
 import 'package:greenpin/presentation/page/home_page/cubit/home_page_cubit.dart';
+import 'package:greenpin/presentation/widget/button/greenpin_text_button.dart';
 import 'package:greenpin/presentation/widget/cubit_hooks.dart';
+import 'package:greenpin/presentation/widget/logout/logout_widget.dart';
 
 class HomePage extends HookWidget {
   const HomePage({
@@ -12,7 +14,7 @@ class HomePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: _Body(),
+      body: LogoutWidget(child: _Body()),
     );
   }
 }
@@ -35,7 +37,10 @@ class _Body extends HookWidget {
     return Center(
       child: state.maybeMap(
         orElse: () => const Text('error'),
-        idle: (_) => Text(LocaleKeys.test.tr()),
+        idle: (_) => GreenpinTextButton(
+          text: LocaleKeys.logOut.tr(),
+          onPressed: cubit.logout,
+        ),
       ),
     );
   }

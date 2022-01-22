@@ -82,8 +82,7 @@ class _Body extends StatelessWidget {
                       isPassword: true,
                       labelText: LocaleKeys.repeatPassword.tr(),
                       onChanged: cubit.repeatPasswordChange,
-                      errorText:
-                          data.firstStepData.repeatPasswordError,
+                      errorText: data.firstStepData.repeatPasswordError,
                     ),
                     const SizedBox(height: AppDimens.xl),
                     _CheckBoxRow(
@@ -165,6 +164,7 @@ class _CheckBoxRow extends StatelessWidget {
         const SizedBox(width: AppDimens.m),
         Expanded(
           child: RichText(
+            textScaleFactor: MediaQuery.of(context).textScaleFactor,
             text: TextSpan(
               style: AppTypography.bodyText1,
               children: [

@@ -53,9 +53,11 @@ void _listener(
   BuildContext context,
 ) {
   current.maybeMap(
-      orElse: () {},
-      userLoggedIn: (_) =>
-          AutoRouter.of(context).replace(const HomePageRoute()));
+    orElse: () {},
+    userLoggedIn: (_) => AutoRouter.of(context).replace(const HomePageRoute()),
+    userNotLoggedIn: (_) =>
+        AutoRouter.of(context).replace(const LoginPageRoute()),
+  );
 }
 
 class _NotLoggedUserButtons extends StatelessWidget {

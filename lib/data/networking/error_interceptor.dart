@@ -50,6 +50,8 @@ class ErrorInterceptor extends Interceptor {
     handler.next(err);
   }
 
+
+
   bool _isTimeout(DioErrorType type) {
     return type == DioErrorType.receiveTimeout ||
         type == DioErrorType.connectTimeout ||

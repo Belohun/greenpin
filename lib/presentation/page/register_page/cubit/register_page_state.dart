@@ -8,5 +8,7 @@ class RegisterPageState with _$RegisterPageState {
 
   const factory RegisterPageState.exitFlow() = _RegisterPageStateExitFlow;
 
+  const factory RegisterPageState.successfulRegister() = _RegisterPageStateSuccessfulRegister;
+
   const factory RegisterPageState.error(String errorMessage) = _RegisterPageStateError;
 }

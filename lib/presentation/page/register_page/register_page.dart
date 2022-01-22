@@ -70,6 +70,9 @@ class RegisterPage extends HookWidget {
         }
       },
       exitFlow: (_) {
+        AutoRouter.of(context).pop();
+      },
+      successfulRegister: (_) {
         SnackBarUtils.showPositiveMessageSnackbar(
             context, LocaleKeys.registrationSuccessful.tr());
         AutoRouter.of(context).popUntilRoot();

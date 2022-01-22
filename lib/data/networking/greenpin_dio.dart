@@ -37,3 +37,14 @@ class GreenpinDio extends DioMixin implements Dio {
     interceptors.addAll(interceptorList);
   }
 }
+
+@LazySingleton()
+class AuthDio extends GreenpinDio {
+  AuthDio(
+    AppEnv appEnv,
+    @Named(authInterceptors) List<Interceptor> interceptors,
+  ) : super(
+          appEnv,
+          interceptors,
+        );
+}

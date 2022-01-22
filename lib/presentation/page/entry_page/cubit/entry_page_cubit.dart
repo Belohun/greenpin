@@ -15,8 +15,8 @@ class EntryPageCubit extends Cubit<EntryPageState> {
 
   final IsUserLoggedInUseCase _isUserLoggedInUseCase;
 
-  void init() {
-    if (_isUserLoggedInUseCase()) {
+  Future<void> init() async {
+    if (await _isUserLoggedInUseCase()) {
       emit(const EntryPageState.userLoggedIn());
     } else {
       emit(const EntryPageState.userNotLoggedIn());

@@ -29,9 +29,14 @@
   "buildingNumber": "Numer domu / mieszkania",
   "deliveryData": "Dane dostawy",
   "addAddress": "Dodaj adres",
-  "deleteAddress": "Usuń adres",
+  "deleteAddress": "Usuń",
   "ok": "ok",
-  "somethingWentWrong": "Coś poszło nie tak ",
-  "registrationSuccessful": "Rejestracja przebiegła pomyślnie"
-
+  "somethingWentWrong": "Coś poszło nie tak",
+  "registrationSuccessful": "Rejestracja przebiegła pomyślnie",
+  "canNotLogIn": "Nie możesz się zalogować?",
+  "doesNotHaveAccount": "Nie masz konta?",
+  "registerYourself": "Zarejestruj się",
+  "logOut": "Wyloguj",
+  "connectionTimeOut": "Czas połączenia minął",
+  "invalidLoginOrPassword": "Nieprawidłowy loign lub hasło"
 }

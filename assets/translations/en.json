@@ -24,13 +24,19 @@
   "addressData": "Address data",
   "additionalAddress": "Additional address",
   "nameOfAddress": "Name (f.e. home)",
-  "city" : "City",
+  "city": "City",
   "street": "Street",
   "buildingNumber": "Building / apartment number",
   "deliveryData": "Delivery data",
   "addAddress": "Add address",
-  "deleteAddress": "Delete Address",
+  "deleteAddress": "Delete",
   "ok": "ok",
   "somethingWentWrong": "Something went wrong",
-  "registrationSuccessful": "Registration successful"
+  "registrationSuccessful": "Registration successful",
+  "canNotLogIn": "Can't log in?",
+  "doesNotHaveAccount": "Doesn't have an account?",
+  "registerYourself": "Register yourself",
+  "logOut": "Logout",
+  "connectionTimeOut": "The connection has timed out",
+  "invalidLoginOrPassword" : "Invalid login or password"
 }

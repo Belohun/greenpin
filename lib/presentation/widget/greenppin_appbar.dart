@@ -3,8 +3,7 @@ import 'package:greenpin/presentation/style/app_colors.dart';
 import 'package:greenpin/presentation/style/app_dimens.dart';
 import 'package:greenpin/presentation/style/app_typography.dart';
 
-class GreenpinAppbar extends StatelessWidget
-    implements PreferredSizeWidget {
+class GreenpinAppbar extends StatelessWidget implements PreferredSizeWidget {
   const GreenpinAppbar({
     Key? key,
     this.title,
@@ -16,6 +15,9 @@ class GreenpinAppbar extends StatelessWidget
     this.onActionPressed,
     this.leadingColor,
   }) : super(key: key);
+
+  factory GreenpinAppbar.empty() =>
+      const GreenpinAppbar(leading: SizedBox.shrink());
 
   @override
   final Size preferredSize = const Size.fromHeight(kToolbarHeight);

@@ -60,19 +60,19 @@ S useCubitBuilder<C extends Cubit, S>(
 }
 
 void useCubitListener<BLOC extends Cubit<S>, S>(
-  BLOC bloc,
+  BLOC cubit,
   BlocListener<BLOC, S> listener, {
   BlocBuilderCondition<S>? listenWhen,
 }) {
   final context = useContext();
   final listenWhenConditioner = listenWhen;
   useMemoized(() {
-    final stream = bloc.stream
+    final stream = cubit.stream
         .where(
             listenWhenConditioner ?? _CubitDefaults.defaultBlocListenCondition)
-        .listen((state) => listener(bloc, state, context));
+        .listen((state) => listener(cubit, state, context));
     return stream.cancel;
-  }, [bloc]);
+  }, [cubit]);
 }
 
 void useCubitListenerWithPageController<BLOC extends Cubit<S>, S>(
