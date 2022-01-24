@@ -1,4 +1,4 @@
-import 'package:greenpin/data/test/dto/address_dto.dart';
+import 'package:greenpin/data/register/dto/address_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'register_dto.g.dart';

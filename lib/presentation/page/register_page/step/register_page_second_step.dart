@@ -75,6 +75,7 @@ class _Body extends StatelessWidget {
                 const SizedBox(height: AppDimens.xm),
                 GreenpinTextField(
                   initText: data.secondStepData.phoneNumber,
+                  textInputType: TextInputType.number,
                   onChanged: cubit.phoneNumberChange,
                   labelText: LocaleKeys.phoneNumber.tr(),
                 ),

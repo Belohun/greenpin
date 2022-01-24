@@ -236,7 +236,7 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
 
     final response = await _registerUserUseCase(_data);
     if (response.isSuccessful) {
-      emit(const RegisterPageState.exitFlow());
+      emit(const RegisterPageState.successfulRegister());
     } else {
       response.requiredError.maybeMap(orElse: () {
         emit(RegisterPageState.error(LocaleKeys.somethingWentWrong.tr()));

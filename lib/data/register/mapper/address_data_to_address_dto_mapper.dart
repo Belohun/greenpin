@@ -1,5 +1,5 @@
 import 'package:greenpin/data/common/data_mapper.dart';
-import 'package:greenpin/data/test/dto/address_dto.dart';
+import 'package:greenpin/data/register/dto/address_dto.dart';
 import 'package:greenpin/presentation/page/register_page/model/address_data.dart';
 import 'package:injectable/injectable.dart';
 
