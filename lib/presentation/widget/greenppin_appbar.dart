@@ -14,10 +14,34 @@ class GreenpinAppbar extends StatelessWidget implements PreferredSizeWidget {
     this.onLeadPressed,
     this.onActionPressed,
     this.leadingColor,
+    this.textColor,
   }) : super(key: key);
 
   factory GreenpinAppbar.empty() =>
       const GreenpinAppbar(leading: SizedBox.shrink());
+
+  factory GreenpinAppbar.green({
+    String? title,
+    List<Widget>? actions,
+    Color? leadingColor,
+    Widget? leading,
+    bool? centerTitle,
+    VoidCallback? onLeadPressed,
+    VoidCallback? onActionPressed,
+    Color? textColor = AppColors.white,
+    Color? background = AppColors.primary,
+  }) =>
+      GreenpinAppbar(
+        title: title,
+        actions: actions,
+        leading: leading,
+        leadingColor: leadingColor,
+        centerTitle: centerTitle,
+        onActionPressed: onActionPressed,
+        onLeadPressed: onLeadPressed,
+        background: background,
+        textColor: textColor,
+      );
 
   @override
   final Size preferredSize = const Size.fromHeight(kToolbarHeight);
@@ -29,6 +53,7 @@ class GreenpinAppbar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onLeadPressed;
   final VoidCallback? onActionPressed;
   final Color? background;
+  final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +63,7 @@ class GreenpinAppbar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         title ?? '',
         overflow: TextOverflow.ellipsis,
-        style: AppTypography.bodyText1,
+        style: AppTypography.bodyText1.copyWith(color: textColor),
       ),
       elevation: AppDimens.zero,
       actions: actions ?? const [SizedBox.shrink()],

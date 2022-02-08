@@ -5,6 +5,15 @@ import 'package:greenpin/presentation/style/app_colors.dart';
 class AppTypography {
   const AppTypography._();
 
+
+
+  static TextStyle get smallText1 => GoogleFonts.lato(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0,
+    color: AppColors.lightGray,
+  );
+
   static TextStyle get bodyText1 => GoogleFonts.lato(
         fontSize: 20,
         fontWeight: FontWeight.w400,

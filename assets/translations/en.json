@@ -38,5 +38,15 @@
   "registerYourself": "Register yourself",
   "logOut": "Logout",
   "connectionTimeOut": "The connection has timed out",
-  "invalidLoginOrPassword" : "Invalid login or password"
+  "invalidLoginOrPassword": "Invalid login or password",
+  "acceptTerms": "Acceptance of terms is required to registration",
+  "atLeastOneDelivery": "At leas one delivery address must be selected!",
+  "shopping": "Shopping",
+  "orders": "Orders",
+  "cart": "Cart",
+  "profile": "Profile",
+  "userData": "User data",
+  "edit": "Edit",
+  "addressName": "Name",
+  "accountData": "Account data"
 }

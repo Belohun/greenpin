@@ -38,5 +38,15 @@
   "registerYourself": "Zarejestruj się",
   "logOut": "Wyloguj",
   "connectionTimeOut": "Czas połączenia minął",
-  "invalidLoginOrPassword": "Nieprawidłowy loign lub hasło"
+  "invalidLoginOrPassword": "Nieprawidłowy loign lub hasło",
+  "acceptTerms": "Do rejestracji wymagana jest akceptacja regulaminu",
+  "atLeastOneDelivery": "Przynajmniej jeden adres musi być zaznaczony jako dane dostawy!",
+  "shopping": "Zakupy",
+  "orders": "Zamówenia",
+  "cart": "Koszyk",
+  "profile": "Profil",
+  "userData": "Dane użytkownika",
+  "edit": "Edytuj",
+  "addressName": "Name",
+  "accountData": "Account data"
 }

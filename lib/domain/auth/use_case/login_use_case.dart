@@ -1,5 +1,7 @@
+import 'package:greenpin/core/di_config.dart';
 import 'package:greenpin/data/auth/mapper/login_page_data_to_login_dto_mapper.dart';
 import 'package:greenpin/data/auth/mapper/user_token_mapper.dart';
+import 'package:greenpin/data/user/provider/user_info_provider_impl.dart';
 import 'package:greenpin/domain/auth/repository/auth_repository.dart';
 import 'package:greenpin/domain/auth/store/auth_store.dart';
 import 'package:greenpin/domain/networking/safe_response/safe_response.dart';
@@ -26,6 +28,7 @@ class LoginUseCase {
           final userTokenDto = await _authRepository.login(dto);
           final userToken = _userTokenMapper.from(userTokenDto);
           await _authStore.saveUserToken(userToken);
+          await getIt.getAsync<UserInfoProvider>();
         },
       );
 }
