@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:greenpin/core/di_config.dart';
+import 'package:greenpin/data/user/provider/user_info_provider_impl.dart';
 import 'package:greenpin/domain/auth/service/logout_service.dart';
 import 'package:greenpin/domain/common/clearable.dart';
 import 'package:injectable/injectable.dart';
@@ -18,11 +20,15 @@ class ForcedLogoutService implements LogoutService {
 
   @override
   Future<void> logout() async {
+    final userInfoProvider = await getIt.getAsync<UserInfoProvider>();
+    await userInfoProvider.clear();
+
     for (final clearable in _clearables) {
       try {
         await clearable.clear();
       } catch (e, s) {
-        print('Failed to clear ${clearable.runtimeType}, ex: $e, stacktrace: $s');
+        print(
+            'Failed to clear ${clearable.runtimeType}, ex: $e, stacktrace: $s');
       }
     }
 

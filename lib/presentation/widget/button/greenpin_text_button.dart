@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class GreenpinTextButton extends StatelessWidget {
   const GreenpinTextButton({
@@ -14,8 +15,8 @@ class GreenpinTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
-      onPressed: onPressed,
+    return InkWell(
+      onTap: onPressed,
       child: Text(
         text,
       style: style,

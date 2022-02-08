@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:greenpin/core/app_regexp.dart';
+import 'package:greenpin/domain/networking/error/greenpin_api_error.dart';
 import 'package:greenpin/domain/networking/error/inner_error.dart';
 import 'package:greenpin/domain/register/use_case/register_user_use_case.dart';
 import 'package:greenpin/exports.dart';
@@ -65,8 +66,11 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
 
   void changeSiteAgreement() {
     _data = _data.copyWith(
-        firstStepData: _data.firstStepData.copyWith(
-            siteAgreementAccepted: !_data.firstStepData.siteAgreementAccepted));
+      firstStepData: _data.firstStepData.copyWith(
+        siteAgreementAccepted: !_data.firstStepData.siteAgreementAccepted,
+        siteAgreementAcceptedError: null,
+      ),
+    );
     _updateState();
   }
 
@@ -174,7 +178,6 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
   }
 
   bool _firstStepValidator(FirstStepData data) =>
-      data.siteAgreementAccepted &&
       data.email.isNotEmptyAndNull &&
       data.password.isNotEmptyAndNull &&
       data.repeatPassword.isNotEmptyAndNull;
@@ -192,7 +195,6 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
 
   bool _isAddressDataValid(SecondStepData data) {
     var isAddressDataValid = true;
-    var isDeliveryAddressChecked = false;
 
     for (final addressData in data.addressList) {
       isAddressDataValid = addressData.name.isNotEmptyAndNull &&
@@ -200,11 +202,7 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
           addressData.city.isNotEmptyAndNull &&
           addressData.buildingNumber.isNotEmptyAndNull &&
           isAddressDataValid;
-      if (isAddressDataValid) {
-        isDeliveryAddressChecked =
-            isDeliveryAddressChecked || addressData.isDeliveryAddress;
-        isAddressDataValid = isAddressDataValid && isDeliveryAddressChecked;
-      } else {
+      if (!isAddressDataValid) {
         break;
       }
     }
@@ -225,28 +223,38 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
       _firstPageData = _firstPageData.copyWith(
           repeatPasswordError: LocaleKeys.passwordsDoesNotMatch.tr());
     }
+    if (!data.siteAgreementAccepted) {
+      _firstPageData = _firstPageData.copyWith(
+          siteAgreementAcceptedError: LocaleKeys.acceptTerms.tr());
+    }
+
     _data = _data.copyWith(firstStepData: _firstPageData);
 
     return _firstPageData.isValid;
   }
 
   Future<void> register() async {
-    _data = _data.copyWith(isLoading: true);
-    _updateState();
-
-    final response = await _registerUserUseCase(_data);
-    if (response.isSuccessful) {
-      emit(const RegisterPageState.successfulRegister());
+    if (!_data.secondStepData.isDeliveryAddressSelected) {
+      emit(RegisterPageState.error(LocaleKeys.atLeastOneDelivery.tr()));
     } else {
-      response.requiredError.maybeMap(orElse: () {
-        emit(RegisterPageState.error(LocaleKeys.somethingWentWrong.tr()));
-      }, fromResponse: (error) {
-        error.innerErrors.forEach(_handleInnerError);
-      });
-    }
+      _data = _data.copyWith(isLoading: true);
+      _updateState();
 
-    _data = _data.copyWith(isLoading: false);
-    _updateState();
+      final response = await _registerUserUseCase(_data);
+      if (response.isSuccessful) {
+        emit(const RegisterPageState.successfulRegister());
+      } else {
+        response.requiredError.handleError(
+          innerErrors: _handleInnerError,
+          orElse: (translatedErrorMessage) {
+            emit(RegisterPageState.error(LocaleKeys.somethingWentWrong.tr()));
+          },
+        );
+      }
+
+      _data = _data.copyWith(isLoading: false);
+      _updateState();
+    }
   }
 
   void _handleInnerError(InnerError error) {

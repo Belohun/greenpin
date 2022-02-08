@@ -4,6 +4,7 @@ import 'package:greenpin/core/app_regexp.dart';
 import 'package:greenpin/domain/auth/use_case/login_use_case.dart';
 import 'package:greenpin/domain/networking/error/api_errors.dart';
 import 'package:greenpin/domain/networking/error/greenpin_api_error.dart';
+import 'package:greenpin/domain/networking/error/inner_error.dart';
 import 'package:greenpin/exports.dart';
 import 'package:greenpin/presentation/page/login_page/model/login_page_data.dart';
 import 'package:greenpin/presentation/widget/cubit_hooks.dart';
@@ -55,17 +56,21 @@ class LoginPageCubit extends Cubit<LoginPageState> {
       } else {
         response.requiredError.handleError(
           orElse: (errorMessage) => emit(LoginPageState.error(errorMessage)),
-          innerErrors: (innerError) {
-            if (innerError.message.contains(ApiErrors.badCredentials)) {
-              _data = _data.copyWith(
-                  emailError: LocaleKeys.invalidLoginOrPassword.tr());
-            }
-          },
+          innerErrors: _handleInnerError,
         );
       }
       _data = _data.copyWith(isLoading: false);
     }
     _updateState();
+  }
+
+  void _handleInnerError(InnerError innerError) {
+    if (innerError.message.contains(ApiErrors.badCredentials)) {
+      _data =
+          _data.copyWith(emailError: LocaleKeys.invalidLoginOrPassword.tr());
+    } else {
+      emit(LoginPageState.error(LocaleKeys.somethingWentWrong.tr()));
+    }
   }
 
   bool _isInputValid() {

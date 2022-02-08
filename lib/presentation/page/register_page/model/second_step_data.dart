@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:greenpin/core/extension/iterable_extensions.dart';
 import 'package:greenpin/presentation/page/register_page/model/address_data.dart';
 
 part 'second_step_data.freezed.dart';
@@ -20,4 +21,11 @@ class SecondStepData with _$SecondStepData {
           AddressData.empty(),
         ],
       );
+
+
+}
+
+extension SecondStepDataExtension on SecondStepData {
+  bool get isDeliveryAddressSelected => addressList
+      .containsWhere((element) => element.isDeliveryAddress);
 }

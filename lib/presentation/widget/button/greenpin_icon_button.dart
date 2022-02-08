@@ -6,15 +6,20 @@ class GreenpinIconButton extends StatelessWidget {
   const GreenpinIconButton({
     required this.onPressed,
     required this.iconData,
+    this.background = AppColors.primary,
+    this.iconColor = AppColors.white,
     Key? key,
   }) : super(key: key);
 
   final VoidCallback onPressed;
   final IconData iconData;
+  final Color background;
+  final Color iconColor;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
+      minSize: AppDimens.iconButtonSize,
       padding: EdgeInsets.zero,
       onPressed: () {
         FocusScope.of(context).unfocus();
@@ -23,15 +28,16 @@ class GreenpinIconButton extends StatelessWidget {
       child: AnimatedContainer(
         width: AppDimens.iconButtonSize,
         height: AppDimens.iconButtonSize,
-        decoration: const BoxDecoration(
-          color: AppColors.primary,
-          borderRadius: BorderRadius.all(Radius.circular(AppDimens.cardRadius)),
+        decoration: BoxDecoration(
+          color: background,
+          borderRadius:
+              const BorderRadius.all(Radius.circular(AppDimens.cardRadius)),
         ),
         duration: const Duration(
             milliseconds: AppDimens.checkBoxDurationInMilliseconds),
         child: Icon(
           iconData,
-          color: AppColors.white,
+          color: iconColor,
         ),
       ),
     );

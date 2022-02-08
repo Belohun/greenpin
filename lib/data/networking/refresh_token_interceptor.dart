@@ -87,6 +87,8 @@ class RefreshTokenInterceptor extends InterceptorWithDio {
           requestOptions: err.requestOptions,
           error: e,
           response: err.response));
+      await _logoutService.logout();
+
     }
   }
 

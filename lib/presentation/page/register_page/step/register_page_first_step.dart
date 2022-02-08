@@ -154,13 +154,11 @@ class _CheckBoxRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return GreenpinCheckboxRow(
+      value: data.firstStepData.siteAgreementAccepted,
+      onPressed: cubit.changeSiteAgreement,
+      errorText: data.firstStepData.siteAgreementAcceptedError,
       children: [
-        GreenpinCheckbox(
-          value: data.firstStepData.siteAgreementAccepted,
-          onPressed: cubit.changeSiteAgreement,
-        ),
         const SizedBox(width: AppDimens.m),
         Expanded(
           child: RichText(

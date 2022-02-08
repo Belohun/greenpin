@@ -1,5 +1,6 @@
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:greenpin/core/app_constants.dart';
 import 'package:greenpin/core/app_env.dart';
 import 'package:greenpin/core/network_module.dart';
 import 'package:greenpin/data/networking/interceptor_with_dio.dart';
@@ -7,7 +8,7 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class GreenpinDio extends DioMixin implements Dio {
-  static const _timeouts = Duration(seconds: 15);
+  static const _timeouts = Duration(seconds: AppConstants.apiTimeout);
 
   GreenpinDio(
     AppEnv appEnv,

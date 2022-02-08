@@ -12,11 +12,13 @@ class FirstStepData with _$FirstStepData {
     String? emailError,
     String? passwordError,
     String? repeatPasswordError,
+    String? siteAgreementAcceptedError,
   }) = _FirstStepData;
 }
 
 extension FirstStepDataExtension on FirstStepData {
   bool get isValid =>
+      siteAgreementAcceptedError == null &&
       emailError == null &&
       passwordError == null &&
       repeatPasswordError == null;

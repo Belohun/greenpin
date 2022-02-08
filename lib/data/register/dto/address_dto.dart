@@ -8,7 +8,7 @@ class AddressDto {
     required this.city,
     required this.street,
     required this.name,
-    required this.isDeliveryAddress,
+    required this.deliveryAddress,
     required this.houseNumber,
   });
 
@@ -16,7 +16,7 @@ class AddressDto {
   final String city;
   final String street;
   final String houseNumber;
-  final bool isDeliveryAddress;
+  final bool deliveryAddress;
 
   factory AddressDto.fromJson(Map<String, dynamic> json) => _$AddressDtoFromJson(json);
 

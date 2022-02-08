@@ -13,7 +13,7 @@ class AddressDataToAddressDtoMapper extends DataMapper<AddressData, AddressDto> 
       city: data.city,
       street: data.street,
       name: data.name,
-      isDeliveryAddress: data.isDeliveryAddress,
+      deliveryAddress: data.isDeliveryAddress,
       houseNumber: data.buildingNumber,
     );
   }

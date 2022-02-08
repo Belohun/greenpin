@@ -5,16 +5,27 @@ import 'package:greenpin/presentation/style/app_typography.dart';
 class GreenpinHeader extends StatelessWidget {
   const GreenpinHeader({
     required this.text,
+    this.textStyle,
     Key? key,
   }) : super(key: key);
 
   final String text;
+  final TextStyle? textStyle;
+
+  factory GreenpinHeader.small({
+    required String text,
+  }) =>
+      GreenpinHeader(
+        text: text,
+        textStyle: AppTypography.bodyText1Bold.copyWith(color: AppColors.gray),
+      );
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: AppTypography.headline1Bold.copyWith(color: AppColors.gray),
+      style: textStyle ??
+          AppTypography.headline1Bold.copyWith(color: AppColors.gray),
     );
   }
 }

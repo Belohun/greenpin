@@ -104,6 +104,7 @@ class _Body extends StatelessWidget {
                 ),
                 const SizedBox(height: AppDimens.l),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     GreenpinIconButton(
                       onPressed: cubit.createNewAddress,
