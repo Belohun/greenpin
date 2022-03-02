@@ -65,9 +65,9 @@ class LoginPageCubit extends Cubit<LoginPageState> {
   }
 
   void _handleInnerError(InnerError innerError) {
-    if (innerError.message.contains(ApiErrors.badCredentials)) {
-      _data =
-          _data.copyWith(emailError: LocaleKeys.invalidLoginOrPassword.tr());
+    if (innerError.message != null &&
+        innerError.message!.contains(ApiErrors.badCredentials)) {
+      emit(LoginPageState.error(LocaleKeys.invalidLoginOrPassword.tr()));
     } else {
       emit(LoginPageState.error(LocaleKeys.somethingWentWrong.tr()));
     }

@@ -73,6 +73,11 @@ class RefreshTokenInterceptor extends InterceptorWithDio {
         print('Refresh token has expired, logging out.');
         await _logoutService.logout();
         handler.reject(err);
+      } catch (e, s) {
+        print(
+            'Refresh token somehow failed, logging out. , ex: $e, stacktrace: $s');
+        await _logoutService.logout();
+        handler.reject(err);
       }
 
       final newToken = await _getUserTokensUseCase();
@@ -82,13 +87,14 @@ class RefreshTokenInterceptor extends InterceptorWithDio {
 
       await _retryRequest(err.requestOptions, handler, newAuthHeader);
     } catch (e, s) {
-      print('Refreshing token somehow failed, ex: $e, stacktrace: $s');
-      handler.next(DioError(
+      print('Retry request failed, ex: $e, stacktrace: $s');
+      handler.next(
+        DioError(
           requestOptions: err.requestOptions,
           error: e,
-          response: err.response));
-      await _logoutService.logout();
-
+          response: err.response,
+        ),
+      );
     }
   }
 
@@ -96,14 +102,7 @@ class RefreshTokenInterceptor extends InterceptorWithDio {
       ErrorInterceptorHandler handler, String authHeader) async {
     dio.unlockAll();
 
-    final response = await dio.request(
-      requestOptions.path,
-      cancelToken: requestOptions.cancelToken,
-      data: requestOptions.data,
-      onReceiveProgress: requestOptions.onReceiveProgress,
-      onSendProgress: requestOptions.onSendProgress,
-      queryParameters: requestOptions.queryParameters,
-    );
+    final response = await dio.fetch(requestOptions);
 
     handler.resolve(response);
   }

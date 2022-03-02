@@ -45,8 +45,10 @@ class SafeResponse<T> {
   }
 }
 
-Future<SafeResponse<T>> fetchSafety<T>(Future<T> Function() request,
-    {Function(dynamic)? onError}) async {
+Future<SafeResponse<T>> fetchSafety<T>(
+  Future<T> Function() request, {
+  Function(dynamic)? onError,
+}) async {
   try {
     final data = await request();
     return SafeResponse.success(data);

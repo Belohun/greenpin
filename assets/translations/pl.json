@@ -15,7 +15,7 @@
   "pleaseInputValidEmail": "Proszę wpisać prawidłowy email",
   "passwordsDoesNotMatch": "Hasła do siebie nie pasują",
   "emailAlreadyTaken": "Email już jest zajęty",
-  "invalidPassword": "Hasło musi zawierać dużą i małą literę oraz cyfry i mieć długość większą niż 8 znaków",
+  "invalidPassword": "Hasło musi zawierać min. 8 znaków, dużą literę oraz cyfrę.",
   "fillYourData": "Uzupełnij dane",
   "dataRequiredToDelivery": "Dane wymagane do realizacji dostawy na podane adresy",
   "name": "Imię",
@@ -40,7 +40,7 @@
   "connectionTimeOut": "Czas połączenia minął",
   "invalidLoginOrPassword": "Nieprawidłowy loign lub hasło",
   "acceptTerms": "Do rejestracji wymagana jest akceptacja regulaminu",
-  "atLeastOneDelivery": "Przynajmniej jeden adres musi być zaznaczony jako dane dostawy!",
+  "deliveryAddressMustBeSelected": "Adres musi być zaznaczony jako dane dostawy!",
   "shopping": "Zakupy",
   "orders": "Zamówenia",
   "cart": "Koszyk",
@@ -48,5 +48,17 @@
   "userData": "Dane użytkownika",
   "edit": "Edytuj",
   "addressName": "Name",
-  "accountData": "Account data"
+  "accountData": "Dane konta",
+  "editEmail": "Edytuj email",
+  "resetPassword" : "Zresetuj hasło",
+  "save" : "Zapisz",
+  "typeYourCurrentEmail" : "Wpisz swój aktualny email",
+  "onlyOneAddressCanBe" : "Tylko jeden adres może być zaznaczony jako dane dostawy!",
+  "oldPassword" : "Stare hasło",
+  "newPassword" : "Nowe hasło",
+  "setNewPassword": "Ustaw nowe hasło",
+  "incorrectPassword" : "Nieprawidłowe hasło"
+
+
+
 }

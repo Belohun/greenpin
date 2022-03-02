@@ -33,5 +33,12 @@ class ForcedLogoutService implements LogoutService {
     }
 
     _logoutEventStreamController.sink.add(Object());
+
+    try {
+      final userInfoProvider = await getIt.getAsync<UserInfoProvider>();
+      await userInfoProvider.clear();
+    } catch (e, s) {
+      print('Failed to clear userInfoProvider, ex: $e, stacktrace: $s');
+    }
   }
 }

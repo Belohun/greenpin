@@ -14,18 +14,6 @@ class SnackBarUtils {
 
   static void showErrorSnackBar(
     BuildContext context,
-    String error, {
-    SnackBarGravity gravity = SnackBarGravity.top,
-  }) {
-    showErrorSnackBarText(
-      context,
-      error,
-      gravity: gravity,
-    );
-  }
-
-  static void showErrorSnackBarText(
-    BuildContext context,
     String text, {
     SnackBarGravity gravity = SnackBarGravity.top,
     Color? color,

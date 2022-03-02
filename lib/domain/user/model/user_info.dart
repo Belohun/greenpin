@@ -1,20 +1,17 @@
-import 'package:greenpin/domain/user/model/address.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:greenpin/domain/user/model/role.dart';
+import 'package:greenpin/presentation/page/register_page/model/address_data.dart';
 
-class UserInfo {
-  const UserInfo({
-    required this.email,
-    required this.name,
-    required this.surname,
-    required this.phoneNumber,
-    required this.address,
-    required this.roles,
-  });
+part 'user_info.freezed.dart';
 
-  final String email;
-  final String name;
-  final String surname;
-  final String phoneNumber;
-  final List<Role> roles;
-  final List<Address> address;
+@freezed
+class UserInfo with _$UserInfo {
+  factory UserInfo({
+    required String email,
+    required String name,
+    required String surname,
+    required String phoneNumber,
+    required List<AddressData> address,
+    required List<Role> roles,
+  }) = _UserInfo;
 }

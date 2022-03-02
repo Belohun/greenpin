@@ -47,7 +47,12 @@ class ErrorInterceptor extends Interceptor {
       );
     }
 
-    handler.next(err);
+    return handler.next(
+      GreenpinDioErrorWrapper(
+        greenpinApiError: GreenpinApiError.unknownError(err),
+        original: err,
+      ),
+    );
   }
 
 

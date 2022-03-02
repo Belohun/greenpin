@@ -28,4 +28,7 @@ class SecondStepData with _$SecondStepData {
 extension SecondStepDataExtension on SecondStepData {
   bool get isDeliveryAddressSelected => addressList
       .containsWhere((element) => element.isDeliveryAddress);
+
+  bool get isMoreThatOneDeliveryAddressSelected =>
+      addressList.where((element) => element.isDeliveryAddress).length > 1;
 }
