@@ -8,7 +8,7 @@ part 'inner_error.g.dart';
 @Freezed()
 class InnerError with _$InnerError {
   factory InnerError({
-    required String message,
+    required String? message,
     required String code,
   }) = DefaultInnerError;
 

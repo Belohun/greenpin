@@ -78,7 +78,7 @@ class RegisterPage extends HookWidget {
         AutoRouter.of(context).popUntilRoot();
       },
       error: (error) {
-        SnackBarUtils.showErrorSnackBarText(context, error.errorMessage);
+        SnackBarUtils.showErrorSnackBar(context, error.errorMessage);
       },
     );
   }

@@ -1,29 +1,29 @@
 import 'package:greenpin/data/common/bidirectional_data_mapper.dart';
 import 'package:greenpin/data/register/dto/address_dto.dart';
-import 'package:greenpin/domain/user/model/address.dart';
+import 'package:greenpin/presentation/page/register_page/model/address_data.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class AddressMapper extends BidirectionalDataMapper<AddressDto, Address> {
+class AddressMapper extends BidirectionalDataMapper<AddressDto, AddressData> {
   @override
-  Address from(AddressDto data) {
-    return Address(
+  AddressData from(AddressDto data) {
+    return AddressData(
       city: data.city,
       street: data.street,
       name: data.name,
       isDeliveryAddress: data.deliveryAddress,
-      houseNumber: data.houseNumber,
+      buildingNumber: data.houseNumber,
     );
   }
 
   @override
-  AddressDto to(Address data) {
+  AddressDto to(AddressData data) {
     return AddressDto(
       city: data.city,
       street: data.street,
       name: data.name,
       deliveryAddress: data.isDeliveryAddress,
-      houseNumber: data.houseNumber,
+      houseNumber: data.buildingNumber,
     );
   }
 }

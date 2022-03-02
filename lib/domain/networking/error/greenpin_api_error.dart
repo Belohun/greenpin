@@ -1,4 +1,3 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:greenpin/domain/networking/error/inner_error.dart';
 import 'package:greenpin/exports.dart';
 

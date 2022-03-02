@@ -133,7 +133,6 @@ class GreenpinTextField extends HookWidget {
           ),
         ),
         errorText: errorText,
-        //  errorStyle: AppTypography.medium.copyWith(color: AppColors.red), //TODO
       ),
       onChanged: onChanged,
     );

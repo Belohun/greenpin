@@ -7,11 +7,12 @@ import 'package:greenpin/presentation/style/app_dimens.dart';
 import 'package:greenpin/presentation/widget/button/greenpin_primary_button.dart';
 import 'package:greenpin/presentation/widget/button/greenpin_text_button.dart';
 import 'package:greenpin/presentation/widget/cubit_hooks.dart';
+import 'package:greenpin/presentation/widget/logout/logout_widget.dart';
 
 class EntryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => const Scaffold(
-        body: _Body(),
+        body: LogoutWidget(child: _Body()),
       );
 }
 
@@ -78,7 +79,6 @@ class _NotLoggedUserButtons extends StatelessWidget {
             top: false,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: AppDimens.l),
-              //TODO change when dimens provided
               child: GreenpinTextButton(
                 onPressed: () =>
                     AutoRouter.of(context).navigate(const RegisterPageRoute()),

@@ -15,7 +15,7 @@
   "pleaseInputValidEmail": "Please input valid email",
   "passwordsDoesNotMatch": "Passwords does not match",
   "emailAlreadyTaken": "Email is already taken",
-  "invalidPassword": "Password must be at least 8 characters long, contain a number and an uppercase letter",
+  "invalidPassword": "Password must be at least 8 characters long, contain a number and an uppercase letter.",
   "fillYourData": "Fill your data",
   "dataRequiredToDelivery": "Data required to deliver to your given addresses",
   "name": "Name",
@@ -40,7 +40,7 @@
   "connectionTimeOut": "The connection has timed out",
   "invalidLoginOrPassword": "Invalid login or password",
   "acceptTerms": "Acceptance of terms is required to registration",
-  "atLeastOneDelivery": "At leas one delivery address must be selected!",
+  "deliveryAddressMustBeSelected": "Delivery address must be selected!",
   "shopping": "Shopping",
   "orders": "Orders",
   "cart": "Cart",
@@ -48,5 +48,16 @@
   "userData": "User data",
   "edit": "Edit",
   "addressName": "Name",
-  "accountData": "Account data"
+  "accountData": "Account data",
+  "editEmail": "Edit email",
+  "resetPassword" : "Reset password",
+  "save" : "Save",
+  "typeYourCurrentEmail" : "Type you current email",
+  "onlyOneAddressCanBe" : "There can be only one delivery address",
+  "oldPassword" : "Old password",
+  "newPassword" : "New password",
+  "setNewPassword": "Set new password",
+  "incorrectPassword" : "Invalid password"
+
+
 }

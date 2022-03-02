@@ -235,38 +235,43 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
 
   Future<void> register() async {
     if (!_data.secondStepData.isDeliveryAddressSelected) {
-      emit(RegisterPageState.error(LocaleKeys.atLeastOneDelivery.tr()));
+      emit(RegisterPageState.error(
+          LocaleKeys.deliveryAddressMustBeSelected.tr()));
     } else {
-      _data = _data.copyWith(isLoading: true);
-      _updateState();
-
-      final response = await _registerUserUseCase(_data);
-      if (response.isSuccessful) {
-        emit(const RegisterPageState.successfulRegister());
+      if (_data.secondStepData.isMoreThatOneDeliveryAddressSelected) {
+        emit(RegisterPageState.error(LocaleKeys.onlyOneAddressCanBe.tr()));
       } else {
-        response.requiredError.handleError(
-          innerErrors: _handleInnerError,
-          orElse: (translatedErrorMessage) {
-            emit(RegisterPageState.error(LocaleKeys.somethingWentWrong.tr()));
-          },
-        );
-      }
+        _data = _data.copyWith(isLoading: true);
+        _updateState();
 
-      _data = _data.copyWith(isLoading: false);
-      _updateState();
+        final response = await _registerUserUseCase(_data);
+        if (response.isSuccessful) {
+          emit(const RegisterPageState.successfulRegister());
+        } else {
+          response.requiredError.handleError(
+            innerErrors: _handleInnerError,
+            orElse: (translatedErrorMessage) {
+              emit(RegisterPageState.error(LocaleKeys.somethingWentWrong.tr()));
+            },
+          );
+        }
+
+        _data = _data.copyWith(isLoading: false);
+        _updateState();
+      }
     }
   }
 
   void _handleInnerError(InnerError error) {
     if (error.code.contains('email')) {
       final firstStepData =
-          _data.firstStepData.copyWith(emailError: error.message.tr());
+          _data.firstStepData.copyWith(emailError: error.message?.tr());
       _data = _data.copyWith(
         firstStepData: firstStepData,
         currentPage: RegisterPageEnum.firstStep,
       );
     } else {
-      emit(RegisterPageState.error(error.message.tr()));
+      emit(RegisterPageState.error(error.message?.tr() ?? LocaleKeys.somethingWentWrong.tr()));
     }
   }
 }

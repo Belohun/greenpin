@@ -35,7 +35,7 @@ class GreenpinAppbar extends StatelessWidget implements PreferredSizeWidget {
         title: title,
         actions: actions,
         leading: leading,
-        leadingColor: leadingColor,
+        leadingColor: leadingColor ?? AppColors.white,
         centerTitle: centerTitle,
         onActionPressed: onActionPressed,
         onLeadPressed: onLeadPressed,

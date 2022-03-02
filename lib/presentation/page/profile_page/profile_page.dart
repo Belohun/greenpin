@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:greenpin/domain/user/model/user_info.dart';
@@ -96,17 +97,22 @@ class _AccountDataContainer extends StatelessWidget {
         vertical: AppDimens.xl,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _AccountData(),
+          GreenpinHeader.small(text: LocaleKeys.accountData.tr() + ':'),
           const SizedBox(height: AppDimens.l),
-          _InfoRow(
+          _InfoColumn(
+            onEditPressed: () => AutoRouter.of(context)
+                .navigate(EditUserEmailPageRoute(userEmail: userInfo.email)),
             name: '${LocaleKeys.email.tr()}:',
             info: userInfo.email,
           ),
           const SizedBox(height: AppDimens.m),
-          _InfoRow(
+          _InfoColumn(
+            onEditPressed: () => AutoRouter.of(context)
+                .navigate(const EditUserPasswordPageRoute()),
             name: '${LocaleKeys.password.tr()}:',
-            info: '****************',
+            info: '*********',
           ),
           const SizedBox(height: AppDimens.m),
         ],
@@ -134,7 +140,7 @@ class _UserDataContainer extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _UserDataRow(),
+          _UserDataRow(userInfo: userInfo),
           const SizedBox(height: AppDimens.l),
           _InfoRow(
             name: '${LocaleKeys.name.tr()}:',
@@ -151,7 +157,7 @@ class _UserDataContainer extends StatelessWidget {
             info: userInfo.phoneNumber,
           ),
           ...userInfo.address.map(
-                (address) {
+            (address) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -170,7 +176,7 @@ class _UserDataContainer extends StatelessWidget {
                   const SizedBox(height: AppDimens.m),
                   _InfoRow(
                     name: '${LocaleKeys.buildingNumber.tr()}:',
-                    info: address.houseNumber,
+                    info: address.buildingNumber,
                   ),
                 ],
               );
@@ -197,13 +203,60 @@ class _InfoRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          name,
-          style: AppTypography.bodyText1Bold,
+        Flexible(
+          child: Text(
+            name,
+            style: AppTypography.bodyText1Bold,
+          ),
         ),
-        Text(
-          info,
-          style: AppTypography.bodyText1,
+        Expanded(
+          child: Text(
+            info,
+            textAlign: TextAlign.end,
+            style: AppTypography.bodyText1,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _InfoColumn extends StatelessWidget {
+  const _InfoColumn({
+    required this.name,
+    required this.info,
+    required this.onEditPressed,
+    Key? key,
+  }) : super(key: key);
+
+  final String name;
+  final String info;
+  final VoidCallback onEditPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: AppTypography.bodyText1Bold,
+              ),
+              Text(
+                info,
+                style: AppTypography.bodyText1,
+              ),
+            ],
+          ),
+        ),
+        Flexible(
+          child: _EditButton(
+            onPressed: onEditPressed,
+          ),
         ),
       ],
     );
@@ -212,8 +265,11 @@ class _InfoRow extends StatelessWidget {
 
 class _UserDataRow extends StatelessWidget {
   const _UserDataRow({
+    required this.userInfo,
     Key? key,
   }) : super(key: key);
+
+  final UserInfo userInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -221,24 +277,10 @@ class _UserDataRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GreenpinHeader.small(text: LocaleKeys.userData.tr() + ':'),
-        _EditButton(),
-      ],
-    );
-  }
-}
-
-class _AccountData extends StatelessWidget {
-  const _AccountData({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        GreenpinHeader.small(text: LocaleKeys.accountData.tr() + ':'),
-        _EditButton(),
+        _EditButton(
+          onPressed: () => AutoRouter.of(context)
+              .navigate(EditUserPageRoute(userInfo: userInfo)),
+        ),
       ],
     );
   }
@@ -246,14 +288,17 @@ class _AccountData extends StatelessWidget {
 
 class _EditButton extends StatelessWidget {
   const _EditButton({
+    required this.onPressed,
     Key? key,
   }) : super(key: key);
+
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return GreenpinTextButton(
       text: LocaleKeys.edit.tr(),
-      onPressed: () {},
+      onPressed: onPressed,
       style: AppTypography.bodyText1.copyWith(color: AppColors.primary),
     );
   }
