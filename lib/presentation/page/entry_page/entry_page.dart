@@ -38,11 +38,13 @@ class _Body extends HookWidget {
       [cubit],
     );
 
-    return Container(
-      width: double.infinity,
-      child: state.maybeMap(
-        orElse: () => const SizedBox.shrink(),
-        userNotLoggedIn: (_) => const _NotLoggedUserButtons(),
+    return LogoutWidget(
+      child: Container(
+        width: double.infinity,
+        child: state.maybeMap(
+          orElse: () => const SizedBox.shrink(),
+          userNotLoggedIn: (_) => const _NotLoggedUserButtons(),
+        ),
       ),
     );
   }

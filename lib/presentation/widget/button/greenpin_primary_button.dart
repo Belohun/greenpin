@@ -15,8 +15,26 @@ class GreenpinPrimaryButton extends StatelessWidget {
     this.backgroundColor = AppColors.primary,
     this.padding = const EdgeInsets.symmetric(horizontal: AppDimens.l),
     this.insidePadding = const EdgeInsets.symmetric(vertical: AppDimens.m),
+    this.textColor = AppColors.white,
+    this.isSmallText = false,
     Key? key,
   }) : super(key: key);
+
+  const GreenpinPrimaryButton.outlined({
+    required this.text,
+    this.onPressed,
+    this.width,
+    this.height,
+    this.borderRadius,
+    this.padding,
+    this.insidePadding,
+    Key? key,
+    bool isSelected = false,
+  })  : backgroundColor = AppColors.white,
+        borderColor = isSelected ? AppColors.lightGreen : AppColors.gray,
+        textColor = isSelected ? AppColors.lightGreen : AppColors.gray,
+        isSmallText = true,
+        super(key: key);
 
   final VoidCallback? onPressed;
   final String text;
@@ -27,6 +45,8 @@ class GreenpinPrimaryButton extends StatelessWidget {
   final Color? backgroundColor;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? insidePadding;
+  final Color? textColor;
+  final bool isSmallText;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +73,9 @@ class GreenpinPrimaryButton extends StatelessWidget {
           child: Center(
             child: Text(
               text,
-              style: AppTypography.bodyText1Bold.copyWith(color: AppColors.white),
+              style: isSmallText
+                  ? AppTypography.smallText1.copyWith(color: textColor)
+                  : AppTypography.bodyText1Bold.copyWith(color: textColor),
             ),
           ),
         ),

@@ -14,11 +14,11 @@ abstract class NetworkModule {
   @Injectable()
   @Named(mainInterceptors)
   List<Interceptor> prodMainInterceptors(
-    ErrorInterceptor errorInterceptor,
-    AuthTokenInterceptor authTokenInterceptor,
-    RefreshTokenInterceptor refreshTokenInterceptor,
-    ResponseInterceptor responseInterceptor,
-  ) =>
+      ErrorInterceptor errorInterceptor,
+      AuthTokenInterceptor authTokenInterceptor,
+      RefreshTokenInterceptor refreshTokenInterceptor,
+      ResponseInterceptor responseInterceptor,
+      ) =>
       [
         authTokenInterceptor,
         refreshTokenInterceptor,
@@ -30,25 +30,26 @@ abstract class NetworkModule {
   @Injectable()
   @Named(mainInterceptors)
   List<Interceptor> devMainInterceptors(
-    ErrorInterceptor errorInterceptor,
-    AuthTokenInterceptor authTokenInterceptor,
-    RefreshTokenInterceptor refreshTokenInterceptor,
-    ResponseInterceptor responseInterceptor,
-  ) =>
+      ErrorInterceptor errorInterceptor,
+      AuthTokenInterceptor authTokenInterceptor,
+      RefreshTokenInterceptor refreshTokenInterceptor,
+      ResponseInterceptor responseInterceptor,
+      ) =>
       [
         authTokenInterceptor,
         refreshTokenInterceptor,
         errorInterceptor,
         responseInterceptor,
+
       ];
 
   @prod
   @Injectable()
   @Named(authInterceptors)
   List<Interceptor> prodAuthInterceptors(
-    ErrorInterceptor errorInterceptor,
-    ResponseInterceptor responseInterceptor,
-  ) =>
+      ErrorInterceptor errorInterceptor,
+      ResponseInterceptor responseInterceptor,
+      ) =>
       [
         errorInterceptor,
         responseInterceptor,
@@ -58,11 +59,12 @@ abstract class NetworkModule {
   @Injectable()
   @Named(authInterceptors)
   List<Interceptor> devAuthInterceptors(
-    ErrorInterceptor errorInterceptor,
-    ResponseInterceptor responseInterceptor,
-  ) =>
+      ErrorInterceptor errorInterceptor,
+      ResponseInterceptor responseInterceptor,
+      ) =>
       [
         errorInterceptor,
         responseInterceptor,
       ];
 }
+

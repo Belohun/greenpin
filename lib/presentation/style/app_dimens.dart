@@ -70,6 +70,7 @@ class AppDimens {
   ///30.0
   static const checkBoxSize = 28.0;
 
+  ///30
   static const iconButtonSize = 30.0;
 
   ///400
@@ -83,4 +84,10 @@ class AppDimens {
 
   ///200
   static const snackbarHideDurationMs = 200;
+
+  ///120
+  static const bigImage = 120.0;
+
+  ///200
+  static const productContainerSize = 136.0;
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:greenpin/presentation/style/app_colors.dart';
 import 'package:greenpin/presentation/style/app_dimens.dart';
 
@@ -8,6 +9,7 @@ class GreenpinIconButton extends StatelessWidget {
     required this.iconData,
     this.background = AppColors.primary,
     this.iconColor = AppColors.white,
+    this.shape,
     Key? key,
   }) : super(key: key);
 
@@ -15,6 +17,7 @@ class GreenpinIconButton extends StatelessWidget {
   final IconData iconData;
   final Color background;
   final Color iconColor;
+  final BoxShape? shape;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +32,12 @@ class GreenpinIconButton extends StatelessWidget {
         width: AppDimens.iconButtonSize,
         height: AppDimens.iconButtonSize,
         decoration: BoxDecoration(
+          border: Border.all(color: AppColors.lightGreen),
           color: background,
-          borderRadius:
-              const BorderRadius.all(Radius.circular(AppDimens.cardRadius)),
+          shape: shape ?? BoxShape.rectangle,
+          borderRadius: shape != null
+              ? null
+              : const BorderRadius.all(Radius.circular(AppDimens.cardRadius)),
         ),
         duration: const Duration(
             milliseconds: AppDimens.checkBoxDurationInMilliseconds),

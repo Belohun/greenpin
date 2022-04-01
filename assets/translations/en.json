@@ -57,7 +57,8 @@
   "oldPassword" : "Old password",
   "newPassword" : "New password",
   "setNewPassword": "Set new password",
-  "incorrectPassword" : "Invalid password"
+  "incorrectPassword" : "Invalid password",
+  "all" : "All ({})"
 
 
 }
