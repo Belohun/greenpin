@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "495901799839",
+    "project_id": "greenpin-68856",
+    "storage_bucket": "greenpin-68856.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495901799839:android:f3b001d8f60d664b5ff9aa",
+        "android_client_info": {
+          "package_name": "com.softlaces.greenpin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "495901799839-gogrs8ducohsv10h8l01okiqsqed0ffa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3ekM119Xu3yEzUOfO4a6SdVkB1Q0eiQc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "495901799839-gogrs8ducohsv10h8l01okiqsqed0ffa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
