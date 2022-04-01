@@ -13,14 +13,14 @@ class AppEnv {
   factory AppEnv.development() {
     return AppEnv._(
       devName,
-      apiUrl: 'https://greenpin-api-dev.herokuapp.com/',
+      apiUrl: 'https://greenpin-api-dev.herokuapp.com/greenpin/api',
     );
   }
 
   factory AppEnv.production() {
     return AppEnv._(
       prodName,
-      apiUrl: 'https://greenpin-api-prod.herokuapp.com/',
+      apiUrl: 'https://greenpin-api-prod.herokuapp.com/greenpin/api',
     );
   }
 }
