@@ -57,8 +57,6 @@
   "oldPassword" : "Stare hasło",
   "newPassword" : "Nowe hasło",
   "setNewPassword": "Ustaw nowe hasło",
-  "incorrectPassword" : "Nieprawidłowe hasło"
-
-
-
+  "incorrectPassword" : "Nieprawidłowe hasło",
+  "all" : "Wszystkie ({})"
 }

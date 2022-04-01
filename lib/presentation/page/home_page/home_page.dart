@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:greenpin/presentation/page/home_page/cubit/home_page_cubit.dart';
 import 'package:greenpin/presentation/page/home_page/model/home_tab_enum.dart';
 import 'package:greenpin/presentation/page/profile_page/profile_page.dart';
+import 'package:greenpin/presentation/page/shoping_page/shopping_page.dart';
 import 'package:greenpin/presentation/style/app_colors.dart';
 import 'package:greenpin/presentation/style/app_dimens.dart';
 import 'package:greenpin/presentation/style/app_typography.dart';
@@ -153,7 +154,7 @@ class _Tab extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (tab) {
       case HomeTabEnum.shopping:
-        return const Text('shopping');
+        return const ShoppingPage();
 
       case HomeTabEnum.orders:
         return const Text('orders');

@@ -20,9 +20,6 @@ class ForcedLogoutService implements LogoutService {
 
   @override
   Future<void> logout() async {
-    final userInfoProvider = await getIt.getAsync<UserInfoProvider>();
-    await userInfoProvider.clear();
-
     for (final clearable in _clearables) {
       try {
         await clearable.clear();

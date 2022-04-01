@@ -38,9 +38,9 @@ class SafeResponse<T> {
     }
   }
 
-  SafeResponse.unknownError(error) {
+  SafeResponse.unknownError(unknownError) {
     status = ResponseStatus.failure;
-    error = GreenpinApiError.unknownError(error);
+    error = GreenpinApiError.unknownError(unknownError);
     data = null;
   }
 }

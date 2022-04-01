@@ -18,9 +18,20 @@ class GreenpinLoadingContainer extends StatelessWidget {
           if (isLoading)
             Container(
               color: Colors.transparent,
-              child: const Center(
-                  child: CircularProgressIndicator(color: AppColors.primary)),
+              child: GreenpinLoader(),
             ),
         ],
       );
+}
+
+class GreenpinLoader extends StatelessWidget {
+  const GreenpinLoader({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+        child: CircularProgressIndicator(color: AppColors.primary));
+  }
 }

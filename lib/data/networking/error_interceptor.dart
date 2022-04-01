@@ -26,6 +26,12 @@ class ErrorInterceptor extends Interceptor {
       } catch (e, s) {
         print(
             'Parsing response error from API failed. ,ex: $e, stacktrace: $s');
+        return handler.next(
+          GreenpinDioErrorWrapper(
+            greenpinApiError: GreenpinApiError.unknownError(err),
+            original: err,
+          ),
+        );
       }
     }
 
