@@ -58,5 +58,7 @@
   "newPassword" : "Nowe hasło",
   "setNewPassword": "Ustaw nowe hasło",
   "incorrectPassword" : "Nieprawidłowe hasło",
-  "all" : "Wszystkie ({})"
+  "all" : "Wszystkie ({})",
+  "productDescription" : "Opis produktu",
+  "nutritions" : "Wartości odżywcze"
 }

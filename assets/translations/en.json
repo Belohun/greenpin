@@ -58,7 +58,7 @@
   "newPassword" : "New password",
   "setNewPassword": "Set new password",
   "incorrectPassword" : "Invalid password",
-  "all" : "All ({})"
-
-
+  "all" : "All ({})",
+  "productDescription" : "Product description",
+  "nutritions" : "Nutritions"
 }

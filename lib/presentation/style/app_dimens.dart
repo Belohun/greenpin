@@ -1,4 +1,5 @@
 class AppDimens {
+
   const AppDimens._();
 
   ///0.0
@@ -90,4 +91,14 @@ class AppDimens {
 
   ///200
   static const productContainerSize = 136.0;
+
+  ///0.90
+  static const bottomsheetsHeight = 0.90;
+
+  ///28
+  static const closeBottomsheetButton = 28.0;
+
+  ///36
+  static const biggerButtonSize = 36.0;
+
 }

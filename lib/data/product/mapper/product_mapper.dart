@@ -13,6 +13,9 @@ class ProductMapper extends BidirectionalDataMapper<ProductDto, Product> {
         description: data.description,
         manufacturerName: data.manufacturerName ?? '',
         price: data.price,
+        quantity: 0,
+        isSync: false,
+        uuid: '${data.name}_${data.id}',
       );
 
   @override

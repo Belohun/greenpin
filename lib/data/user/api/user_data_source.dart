@@ -18,10 +18,10 @@ abstract class UserDataSource {
   @GET('/user/info')
   Future<UserInfoDto> getUserInfo();
 
-  @PUT('/user')
+  @POST('/user')
   Future<void> updateUser(@Body() EditUserDataDto editUserDataDto);
 
-  @PUT('/user')
+  @POST('/user')
   Future<void> updateUserEmail(@Body() EditUserEmailDto editUserEmailDto);
 
   @PUT('/user')
