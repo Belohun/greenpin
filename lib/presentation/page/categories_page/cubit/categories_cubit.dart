@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:greenpin/domain/category/use_case/get_subcategories_use_case.dart';
+import 'package:greenpin/domain/product/model/product.dart';
 import 'package:greenpin/exports.dart';
 import 'package:greenpin/presentation/page/categories_page/cubit/categories_data.dart';
 import 'package:greenpin/presentation/widget/cubit_hooks.dart';
@@ -22,9 +23,16 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     final response = await _getSubcategoriesUseCase(categoryId);
 
     if (response.isSuccessful) {
-      _data = CategoriesData(subcategoryList: response.requiredData);
+      final allProducts = <Product>[];
+      for (final element in response.requiredData) {
+        allProducts.addAll(element.productResponseList);
+      }
+      _data = CategoriesData(
+        subcategoryList: response.requiredData,
+        allProducts: allProducts,
+      );
     } else {
-      _data = CategoriesData(subcategoryList: []);
+      _data = CategoriesData(subcategoryList: [], allProducts: []);
     }
 
     _updateState();

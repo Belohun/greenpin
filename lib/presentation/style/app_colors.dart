@@ -10,4 +10,6 @@ class AppColors {
   static const lightGreen = Color(0xFF129865);
   static const red = Color(0xFFFE4A49);
   static const white = Color(0xFFFFFFFF);
+  static const indicator = Color.fromRGBO(199, 210, 214, 1);
+
 }

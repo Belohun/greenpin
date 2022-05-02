@@ -10,40 +10,47 @@ class GreenpinIconButton extends StatelessWidget {
     this.background = AppColors.primary,
     this.iconColor = AppColors.white,
     this.shape,
+    this.size = AppDimens.iconButtonSize,
     Key? key,
   }) : super(key: key);
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final IconData iconData;
   final Color background;
   final Color iconColor;
   final BoxShape? shape;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
-      minSize: AppDimens.iconButtonSize,
-      padding: EdgeInsets.zero,
-      onPressed: () {
-        FocusScope.of(context).unfocus();
-        onPressed();
-      },
-      child: AnimatedContainer(
-        width: AppDimens.iconButtonSize,
-        height: AppDimens.iconButtonSize,
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.lightGreen),
-          color: background,
-          shape: shape ?? BoxShape.rectangle,
-          borderRadius: shape != null
-              ? null
-              : const BorderRadius.all(Radius.circular(AppDimens.cardRadius)),
-        ),
-        duration: const Duration(
-            milliseconds: AppDimens.checkBoxDurationInMilliseconds),
-        child: Icon(
-          iconData,
-          color: iconColor,
+    return Opacity(
+      opacity: onPressed != null ? 1 : 0.5,
+      child: CupertinoButton(
+        minSize: size,
+        padding: EdgeInsets.zero,
+        onPressed: onPressed != null
+            ? () {
+                FocusScope.of(context).unfocus();
+                onPressed?.call();
+              }
+            : null,
+        child: AnimatedContainer(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.lightGreen),
+            color: background,
+            shape: shape ?? BoxShape.rectangle,
+            borderRadius: shape != null
+                ? null
+                : const BorderRadius.all(Radius.circular(AppDimens.cardRadius)),
+          ),
+          duration: const Duration(
+              milliseconds: AppDimens.checkBoxDurationInMilliseconds),
+          child: Icon(
+            iconData,
+            color: iconColor,
+          ),
         ),
       ),
     );

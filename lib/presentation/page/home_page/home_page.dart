@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:greenpin/presentation/page/cart_page/cart_page.dart';
 import 'package:greenpin/presentation/page/home_page/cubit/home_page_cubit.dart';
 import 'package:greenpin/presentation/page/home_page/model/home_tab_enum.dart';
 import 'package:greenpin/presentation/page/profile_page/profile_page.dart';
@@ -160,7 +161,7 @@ class _Tab extends StatelessWidget {
         return const Text('orders');
 
       case HomeTabEnum.cart:
-        return const Text('cart');
+        return const CartPage();
       case HomeTabEnum.profile:
         return const ProfilePage();
     }

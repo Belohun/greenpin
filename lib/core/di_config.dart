@@ -9,4 +9,4 @@ const dev = Environment(AppEnv.devName);
 const prod = Environment(AppEnv.prodName);
 
 @InjectableInit(preferRelativeImports: false)
-void configureDependencies(String env) => $initGetIt(getIt, environment: env);
+Future<void> configureDependencies(String env) => $initGetIt(getIt, environment: env);

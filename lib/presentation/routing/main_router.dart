@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:greenpin/presentation/page/categories_page/categories_page.dart';
+import 'package:greenpin/presentation/page/category_page/category_page.dart';
 import 'package:greenpin/presentation/page/edit_user_data_page/edit_user_page.dart';
 import 'package:greenpin/presentation/page/edit_user_email/edit_user_email_page.dart';
 import 'package:greenpin/presentation/page/edit_user_password/edit_user_password_page.dart';
 import 'package:greenpin/presentation/page/entry_page/entry_page.dart';
 import 'package:greenpin/presentation/page/home_page/home_page.dart';
 import 'package:greenpin/presentation/page/login_page/login_page.dart';
+import 'package:greenpin/presentation/page/product_page/product_page.dart';
 import 'package:greenpin/presentation/page/register_page/register_page.dart';
 
 @AdaptiveAutoRouter(
@@ -21,6 +23,8 @@ import 'package:greenpin/presentation/page/register_page/register_page.dart';
     AutoRoute(page: EditUserEmailPage),
     AutoRoute(page: EditUserPasswordPage),
     AutoRoute(page: CategoriesPage),
+    AutoRoute(page: CategoryPage),
+    AutoRoute(page: ProductPage),
   ],
 )
 class $MainRouter {}
