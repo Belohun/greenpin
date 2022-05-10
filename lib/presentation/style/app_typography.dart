@@ -12,6 +12,7 @@ class AppTypography {
     fontWeight: FontWeight.w400,
     letterSpacing: 0,
     color: AppColors.lightGray,
+
   );
 
   static TextStyle get bodyText1 => GoogleFonts.lato(

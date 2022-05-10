@@ -3,6 +3,8 @@ import 'package:greenpin/exports.dart';
 
 part 'pagination.g.dart';
 
+const standardPageSize = 10;
+
 @JsonSerializable()
 class Pagination {
   Pagination({
@@ -15,9 +17,9 @@ class Pagination {
   final int size;
   final List<SortEnum> sort;
 
-  factory Pagination.firstPage() => Pagination(
-        size: 10,
-        page: 1,
+  factory Pagination.standardPage(int page) => Pagination(
+        size: standardPageSize,
+        page: page,
         sort: [SortEnum.asc],
       );
 

@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:greenpin/presentation/style/app_dimens.dart';
 
-class GreenpinCachedImage extends StatelessWidget {
+class GreenpinCachedImage extends HookWidget {
   final String? url;
   final double? height;
   final double? width;
@@ -25,6 +26,9 @@ class GreenpinCachedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final maxMemWidth = useMemoized(() => MediaQuery.of(context).size.width / 2,
+        [MediaQuery.of(context).size]);
+
     if (url?.isEmpty ?? false) {
       return placeHolder ??
           ClipRRect(
@@ -37,6 +41,8 @@ class GreenpinCachedImage extends StatelessWidget {
           );
     } else {
       return CachedNetworkImage(
+        memCacheWidth: maxMemWidth.toInt(),
+        memCacheHeight: maxMemWidth.toInt(),
         height: height,
         width: width,
         imageUrl: url!,

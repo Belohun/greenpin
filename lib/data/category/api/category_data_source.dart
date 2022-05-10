@@ -20,6 +20,6 @@ abstract class CategoryDataSource {
   @POST('/category')
   Future<void> addCategory(@Body() ProductCategoryDto addCategory);
 
-  @GET('/product/1/{categoryId}') //TODO change in v2
+  @GET('/product/1/{categoryId}') //TODO change in v2 (1 is a store)
   Future<List<SubcategoryDto>> getSubCategories(@Path('categoryId') int categoryId);
 }

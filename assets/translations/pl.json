@@ -14,6 +14,7 @@
   "cont": "Dalej",
   "pleaseInputValidEmail": "Proszę wpisać prawidłowy email",
   "passwordsDoesNotMatch": "Hasła do siebie nie pasują",
+  "currentPasswordDoesNotMatch": "Nieprawidłowe stare hasło!",
   "emailAlreadyTaken": "Email już jest zajęty",
   "invalidPassword": "Hasło musi zawierać min. 8 znaków, dużą literę oraz cyfrę.",
   "fillYourData": "Uzupełnij dane",
@@ -60,5 +61,7 @@
   "incorrectPassword" : "Nieprawidłowe hasło",
   "all" : "Wszystkie ({})",
   "productDescription" : "Opis produktu",
-  "nutritions" : "Wartości odżywcze"
+  "nutritions" : "Wartości odżywcze",
+  "phoneNumberRequirement": "Numer telefonu musi mieć co najmnjiej dziewięć cyfr!"
+
 }

@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:greenpin/domain/category/model/product_category.dart';
 import 'package:greenpin/exports.dart';
+import 'package:greenpin/presentation/page/home_page/model/home_tab_enum.dart';
 import 'package:greenpin/presentation/page/shoping_page/cubit/shopping_cubit.dart';
 import 'package:greenpin/presentation/style/app_dimens.dart';
 import 'package:greenpin/presentation/style/app_typography.dart';
@@ -10,6 +12,7 @@ import 'package:greenpin/presentation/util/snackbar_util.dart';
 import 'package:greenpin/presentation/widget/container/flexible_wrap.dart';
 import 'package:greenpin/presentation/widget/container/greenpin_loading_container.dart';
 import 'package:greenpin/presentation/widget/cubit_hooks.dart';
+import 'package:greenpin/presentation/widget/greenppin_appbar.dart';
 import 'package:greenpin/presentation/widget/image/greenpin_cached_image.dart';
 
 class ShoppingPage extends HookWidget {
@@ -26,29 +29,43 @@ class ShoppingPage extends HookWidget {
       cubit.init();
     }, [cubit]);
 
-    return state.maybeMap(
-      orElse: () => const SizedBox.shrink(),
-      loading: (_) => const GreenpinLoader(),
-      idle: (idleState) => SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(AppDimens.m),
-          child: FlexibleWrap(
-            childrenRowCount: 2,
-            spacing: AppDimens.m,
-            childrenBuilder: (width) => idleState.data.productCategories
-                .map(
-                  (productCategory) => CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () => AutoRouter.of(context).navigate(
-                      CategoriesPageRoute(category: productCategory)
+    return Scaffold(
+      appBar: GreenpinAppbar.green(
+        leading: const SizedBox.shrink(),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppDimens.l),
+            child: Icon(
+              HomeTabEnum.shopping.icon,
+              size: AppDimens.iconButtonSize,
+            ),
+          ),
+        ],
+        title: HomeTabEnum.shopping.name,
+      ),
+      body: state.maybeMap(
+        orElse: () => const SizedBox.shrink(),
+        loading: (_) => const GreenpinLoader(),
+        idle: (idleState) => SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(AppDimens.m),
+            child: FlexibleWrap(
+              childrenRowCount: 2,
+              spacing: AppDimens.m,
+              childrenBuilder: (width) => idleState.data.productCategories
+                  .map(
+                    (productCategory) => CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () => AutoRouter.of(context)
+                          .push(CategoriesPageRoute(category: productCategory)),
+                      child: _ProductCategoryWidget(
+                        productCategory: productCategory,
+                        width: width,
+                      ),
                     ),
-                    child: _ProductCategoryWidget(
-                      productCategory: productCategory,
-                      width: width,
-                    ),
-                  ),
-                )
-                .toList(),
+                  )
+                  .toList(),
+            ),
           ),
         ),
       ),

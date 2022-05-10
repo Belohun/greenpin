@@ -9,7 +9,7 @@ part 'home_page_cubit.freezed.dart';
 
 part 'home_page_state.dart';
 
-@injectable
+@singleton
 class HomePageCubit extends Cubit<HomePageState> {
   HomePageCubit(this._logoutService) : super(const HomePageState.loading());
 

@@ -72,10 +72,10 @@ class EditUserEmailCubit extends Cubit<EditUserEmailState> {
 
   void _handleInnerError(InnerError error) {
     if (error.code.contains('email')) {
-      _data = _data.copyWith(emailError: error.message?.tr());
+      _data = _data.copyWith(emailError: error.code.tr());
     } else {
       emit(EditUserEmailState.error(
-          error.message?.tr() ?? LocaleKeys.somethingWentWrong.tr()));
+          error.code.tr()));
     }
   }
 }

@@ -15,7 +15,7 @@ class EditUserDataMapper extends DataMapper<EditUserData, EditUserDataDto> {
   EditUserDataDto call(EditUserData data) {
     return EditUserDataDto(
       name: data.name,
-      surName: data.surName,
+      surname: data.surName,
       phoneNumber: data.phoneNumber,
       addressList: data.addressList
           .map<AddressDto>(_addressDataToAddressDtoMapper)

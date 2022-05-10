@@ -106,9 +106,12 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
   }
 
   void phoneNumberChange(String phoneNumber) {
-    final secondStepData =
-        _data.secondStepData.copyWith(phoneNumber: phoneNumber);
+    final secondStepData = _data.secondStepData.copyWith(
+      phoneNumber: phoneNumber,
+      phoneNumberError: null,
+    );
     _data = _data.copyWith(secondStepData: secondStepData);
+    _updateState();
   }
 
   void cityChange(int index, String city) {
@@ -234,7 +237,12 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
   }
 
   Future<void> register() async {
-    if (!_data.secondStepData.isDeliveryAddressSelected) {
+    if (_data.secondStepData.phoneNumber.length < 9) {
+      final secondStepData = _data.secondStepData
+          .copyWith(phoneNumberError: LocaleKeys.phoneNumberRequirement.tr());
+      _data = _data.copyWith(secondStepData: secondStepData);
+      emit(const RegisterPageState.scrollToStart());
+    } else if (!_data.secondStepData.isDeliveryAddressSelected) {
       emit(RegisterPageState.error(
           LocaleKeys.deliveryAddressMustBeSelected.tr()));
     } else {
@@ -257,21 +265,23 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
         }
 
         _data = _data.copyWith(isLoading: false);
-        _updateState();
+
       }
     }
+    _updateState();
   }
 
   void _handleInnerError(InnerError error) {
     if (error.code.contains('email')) {
       final firstStepData =
-          _data.firstStepData.copyWith(emailError: error.message?.tr());
+          _data.firstStepData.copyWith(emailError: error.code.tr());
       _data = _data.copyWith(
         firstStepData: firstStepData,
         currentPage: RegisterPageEnum.firstStep,
       );
     } else {
-      emit(RegisterPageState.error(error.message?.tr() ?? LocaleKeys.somethingWentWrong.tr()));
+      emit(RegisterPageState.error(
+          error.message?.tr() ?? LocaleKeys.somethingWentWrong.tr()));
     }
   }
 }

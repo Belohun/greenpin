@@ -18,6 +18,13 @@ typedef BlocListenerWithPageController<BLOC extends Cubit<S>, S> = void
   BuildContext context,
   PageController controller,
 );
+typedef BlocListenerWithScrollController<BLOC extends Cubit<S>, S> = void
+    Function(
+  BLOC cubit,
+  S current,
+  BuildContext context,
+  ScrollController controller,
+);
 
 class _CubitDefaults {
   static bool defaultBlocBuilderCondition<S>(S state) => state is BuildState;
@@ -88,6 +95,28 @@ void useCubitListenerWithPageController<BLOC extends Cubit<S>, S>(
         .where(
             listenWhenConditioner ?? _CubitDefaults.defaultBlocListenCondition)
         .listen((state) => listener(bloc, state, context, controller));
+    return stream.cancel;
+  }, [bloc]);
+}
+
+void useCubitListenerWithScrollController<BLOC extends Cubit<S>, S>(
+  BLOC bloc,
+  BlocListenerWithScrollController<BLOC, S> listener,
+  ScrollController controller, {
+  BlocBuilderCondition<S>? listenWhen,
+}) {
+  final context = useContext();
+  final listenWhenConditioner = listenWhen;
+  useMemoized(() {
+    final stream = bloc.stream
+        .where(
+            listenWhenConditioner ?? _CubitDefaults.defaultBlocListenCondition)
+        .listen((state) => listener(
+              bloc,
+              state,
+              context,
+              controller,
+            ));
     return stream.cancel;
   }, [bloc]);
 }

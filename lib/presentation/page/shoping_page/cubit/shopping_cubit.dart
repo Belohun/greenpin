@@ -11,7 +11,7 @@ part 'shopping_cubit.freezed.dart';
 
 part 'shopping_state.dart';
 
-@injectable
+@singleton
 class ShoppingCubit extends Cubit<ShoppingState> {
   ShoppingCubit(this._getCategoriesUseCase)
       : super(const ShoppingState.loading());

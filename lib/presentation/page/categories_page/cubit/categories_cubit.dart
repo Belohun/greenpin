@@ -10,7 +10,7 @@ part 'categories_state.dart';
 
 part 'categories_cubit.freezed.dart';
 
-@Singleton()
+@injectable
 class CategoriesCubit extends Cubit<CategoriesState> {
   CategoriesCubit(this._getSubcategoriesUseCase)
       : super(const CategoriesState.loading());
@@ -20,6 +20,8 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   late CategoriesData _data;
 
   Future<void> init(int categoryId) async {
+    emit(const CategoriesState.loading());
+
     final response = await _getSubcategoriesUseCase(categoryId);
 
     if (response.isSuccessful) {

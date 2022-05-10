@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:greenpin/domain/user/model/user_info.dart';
 import 'package:greenpin/exports.dart';
+import 'package:greenpin/presentation/page/home_page/model/home_tab_enum.dart';
 import 'package:greenpin/presentation/page/profile_page/cubit/profile_cubit.dart';
 import 'package:greenpin/presentation/style/app_colors.dart';
 import 'package:greenpin/presentation/style/app_dimens.dart';
@@ -10,6 +11,7 @@ import 'package:greenpin/presentation/style/app_typography.dart';
 import 'package:greenpin/presentation/widget/button/greenpin_text_button.dart';
 import 'package:greenpin/presentation/widget/container/greenpin_loading_container.dart';
 import 'package:greenpin/presentation/widget/cubit_hooks.dart';
+import 'package:greenpin/presentation/widget/greenppin_appbar.dart';
 import 'package:greenpin/presentation/widget/text/info_widgets.dart';
 
 class ProfilePage extends HookWidget {
@@ -24,25 +26,45 @@ class ProfilePage extends HookWidget {
       cubit.init();
     }, [cubit]);
 
-    return GreenpinLoadingContainer(
-      isLoading: state is ProfileStateLoading,
-      child: state.maybeMap(
-        orElse: () => const SizedBox.shrink(),
-        idle: (idleState) => SingleChildScrollView(
-          child: Column(
-            children: [
-              _UserDataContainer(
-                cubit: cubit,
-                userInfo: idleState.userInfo,
-              ),
-              const Divider(thickness: 1),
-              _AccountDataContainer(
-                cubit: cubit,
-                userInfo: idleState.userInfo,
-              ),
-              const Divider(thickness: 1),
-              _LogoutButton(cubit: cubit),
-            ],
+    return Scaffold(
+      appBar: GreenpinAppbar.green(
+        leading: const SizedBox.shrink(),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppDimens.l),
+            child: Icon(
+              HomeTabEnum.profile.icon,
+              size: AppDimens.iconButtonSize,
+            ),
+          ),
+        ],
+        title: HomeTabEnum.shopping.name,
+      ),
+      body: GreenpinLoadingContainer(
+        isLoading: state is ProfileStateLoading,
+        child: state.maybeMap(
+          orElse: () => const SizedBox.shrink(),
+          idle: (idleState) => SingleChildScrollView(
+            child: Column(
+              children: [
+                _UserDataContainer(
+                  cubit: cubit,
+                  userInfo: idleState.userInfo,
+                ),
+                const Divider(thickness: 1),
+                _AddressDataContainer(
+                  cubit: cubit,
+                  userInfo: idleState.userInfo,
+                ),
+                const Divider(thickness: 1),
+                _AccountDataContainer(
+                  cubit: cubit,
+                  userInfo: idleState.userInfo,
+                ),
+                const Divider(thickness: 1),
+                _LogoutButton(cubit: cubit),
+              ],
+            ),
           ),
         ),
       ),
@@ -121,6 +143,76 @@ class _AccountDataContainer extends StatelessWidget {
   }
 }
 
+class _AddressDataContainer extends StatelessWidget {
+  const _AddressDataContainer({
+    required this.cubit,
+    required this.userInfo,
+    Key? key,
+  }) : super(key: key);
+
+  final ProfileCubit cubit;
+  final UserInfo userInfo;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppDimens.l,
+        vertical: AppDimens.xl,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ...userInfo.address.map(
+            (address) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GreenpinHeader.small(
+                          text: LocaleKeys.addressData.tr() + ':'),
+                      _EditButton(
+                        onPressed: () => AutoRouter.of(context).navigate(
+                          EditUserPageRoute(
+                            userInfo: userInfo,
+                            isEditUser: false,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppDimens.m),
+                  _InfoColumn(
+                    name: '${LocaleKeys.addressName.tr()}:',
+                    info: address.name,
+                  ),
+                  const SizedBox(height: AppDimens.m),
+                  _InfoColumn(
+                    name: '${LocaleKeys.city.tr()}:',
+                    info: address.city,
+                  ),
+                  const SizedBox(height: AppDimens.m),
+                  _InfoColumn(
+                    name: '${LocaleKeys.street.tr()}:',
+                    info: address.street,
+                  ),
+                  const SizedBox(height: AppDimens.m),
+                  _InfoColumn(
+                    name: '${LocaleKeys.buildingNumber.tr()}:',
+                    info: address.buildingNumber,
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _UserDataContainer extends StatelessWidget {
   const _UserDataContainer({
     required this.cubit,
@@ -142,45 +234,19 @@ class _UserDataContainer extends StatelessWidget {
         children: [
           _UserDataRow(userInfo: userInfo),
           const SizedBox(height: AppDimens.l),
-          _InfoRow(
+          _InfoColumn(
             name: '${LocaleKeys.name.tr()}:',
             info: userInfo.name,
           ),
           const SizedBox(height: AppDimens.m),
-          _InfoRow(
+          _InfoColumn(
             name: '${LocaleKeys.surname.tr()}:',
             info: userInfo.surname,
           ),
           const SizedBox(height: AppDimens.m),
-          _InfoRow(
+          _InfoColumn(
             name: '${LocaleKeys.phoneNumber.tr()}:',
             info: userInfo.phoneNumber,
-          ),
-          ...userInfo.address.map(
-            (address) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: AppDimens.m),
-                  GreenpinHeader.small(text: address.name),
-                  const SizedBox(height: AppDimens.m),
-                  _InfoRow(
-                    name: '${LocaleKeys.city.tr()}:',
-                    info: address.city,
-                  ),
-                  const SizedBox(height: AppDimens.m),
-                  _InfoRow(
-                    name: '${LocaleKeys.street.tr()}:',
-                    info: address.street,
-                  ),
-                  const SizedBox(height: AppDimens.m),
-                  _InfoRow(
-                    name: '${LocaleKeys.buildingNumber.tr()}:',
-                    info: address.buildingNumber,
-                  ),
-                ],
-              );
-            },
           ),
         ],
       ),
@@ -225,13 +291,13 @@ class _InfoColumn extends StatelessWidget {
   const _InfoColumn({
     required this.name,
     required this.info,
-    required this.onEditPressed,
+    this.onEditPressed,
     Key? key,
   }) : super(key: key);
 
   final String name;
   final String info;
-  final VoidCallback onEditPressed;
+  final VoidCallback? onEditPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -253,11 +319,12 @@ class _InfoColumn extends StatelessWidget {
             ],
           ),
         ),
-        Flexible(
-          child: _EditButton(
-            onPressed: onEditPressed,
+        if (onEditPressed != null)
+          Flexible(
+            child: _EditButton(
+              onPressed: onEditPressed!,
+            ),
           ),
-        ),
       ],
     );
   }
@@ -278,8 +345,12 @@ class _UserDataRow extends StatelessWidget {
       children: [
         GreenpinHeader.small(text: LocaleKeys.userData.tr() + ':'),
         _EditButton(
-          onPressed: () => AutoRouter.of(context)
-              .navigate(EditUserPageRoute(userInfo: userInfo)),
+          onPressed: () => AutoRouter.of(context).navigate(
+            EditUserPageRoute(
+              userInfo: userInfo,
+              isEditUser: true,
+            ),
+          ),
         ),
       ],
     );

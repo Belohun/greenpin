@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:greenpin/core/app_regexp.dart';
+import 'package:greenpin/domain/networking/error/api_errors.dart';
 import 'package:greenpin/domain/networking/error/inner_error.dart';
 import 'package:greenpin/domain/user/use_case/edit_user_password_user_case.dart';
 import 'package:greenpin/exports.dart';
@@ -71,8 +72,14 @@ class EditUserPasswordCubit extends Cubit<EditUserPasswordState> {
             emit(EditUserPasswordState.error(translatedErrorMessage));
           },
           innerErrors: (InnerError innerError) {
-            emit(EditUserPasswordState.error(innerError.message?.tr() ??
-                LocaleKeys.somethingWentWrong.tr()));
+            if (innerError.code.contains(ApiErrors.oldPasswordError)) {
+              final newError = EditUserPasswordError(
+                  passwordError: EditPasswordTextError.invalid);
+
+              _data = _data.copyWith(error: newError);
+            } else {
+              emit(EditUserPasswordState.error(innerError.code.tr()));
+            }
           },
         );
       }

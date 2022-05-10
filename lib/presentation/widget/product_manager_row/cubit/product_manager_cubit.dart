@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:greenpin/domain/product/model/product.dart';
+import 'package:greenpin/domain/product/use_case/get_products_stream_use_case.dart';
 import 'package:greenpin/domain/product/use_case/update_fetched_products_with_local_use_case.dart';
 import 'package:greenpin/domain/product/use_case/update_product_quantity_use_case.dart';
 import 'package:greenpin/exports.dart';
@@ -16,7 +19,15 @@ class ProductManagerCubit extends Cubit<ProductManagerState> {
   ProductManagerCubit(
     this._updateFetchedProductsWithLocalUseCase,
     this._updateProductQuantityUseCase,
-  ) : super(const ProductManagerState.loading());
+    this._getProductsStreamUseCase,
+  ) : super(const ProductManagerState.loading()) {
+    _productSubscription =
+        _getProductsStreamUseCase().listen(_productsListener);
+  }
+
+  final GetProductsStreamUseCase _getProductsStreamUseCase;
+
+  late final StreamSubscription _productSubscription;
 
   final UpdateFetchedProductsWithLocalUseCase
       _updateFetchedProductsWithLocalUseCase;
@@ -67,5 +78,15 @@ class ProductManagerCubit extends Cubit<ProductManagerState> {
       product.quantity - 1,
       product,
     );
+  }
+
+  void _productsListener(bool event) {
+    updateProducts();
+  }
+
+  @override
+  Future<void> close() async {
+    await super.close();
+    await _productSubscription.cancel();
   }
 }

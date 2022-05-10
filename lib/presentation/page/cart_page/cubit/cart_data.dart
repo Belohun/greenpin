@@ -8,4 +8,6 @@ class CartData with _$CartData {
   factory CartData({
     required List<Product> products,
   }) = _CartData;
+
+  factory CartData.emptyData() => _CartData(products: []);
 }
