@@ -10,8 +10,8 @@ import 'package:greenpin/presentation/page/register_page/step/register_page_seco
 import 'package:greenpin/presentation/style/app_colors.dart';
 import 'package:greenpin/presentation/style/app_dimens.dart';
 import 'package:greenpin/presentation/util/snackbar_util.dart';
-import 'package:greenpin/presentation/widget/cubit_hooks.dart';
 import 'package:greenpin/presentation/widget/container/greenpin_loading_container.dart';
+import 'package:greenpin/presentation/widget/cubit_hooks.dart';
 import 'package:greenpin/presentation/widget/greenppin_appbar.dart';
 
 class RegisterPage extends HookWidget {

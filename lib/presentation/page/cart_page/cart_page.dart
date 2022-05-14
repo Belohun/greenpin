@@ -1,13 +1,17 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:greenpin/exports.dart';
 import 'package:greenpin/presentation/page/cart_page/cubit/cart_cubit.dart';
 import 'package:greenpin/presentation/page/cart_page/cubit/cart_data.dart';
 import 'package:greenpin/presentation/page/categories_page/categories_page.dart';
+import 'package:greenpin/presentation/page/home_page/model/home_tab_enum.dart';
 import 'package:greenpin/presentation/style/app_colors.dart';
 import 'package:greenpin/presentation/style/app_dimens.dart';
 import 'package:greenpin/presentation/widget/container/greenpin_loading_container.dart';
 import 'package:greenpin/presentation/widget/cubit_hooks.dart';
+import 'package:greenpin/presentation/widget/greenppin_appbar.dart';
 import 'package:greenpin/presentation/widget/product_manager_row/cubit/product_manager_cubit.dart';
 
 class CartPage extends HookWidget {
@@ -22,11 +26,26 @@ class CartPage extends HookWidget {
       cubit.init();
     }, [cubit]);
 
-    return state.maybeMap(
-      orElse: () => const GreenpinLoader(),
-      idle: (idleState) => _Body(
-        data: idleState.data,
-        cubit: cubit,
+    return Scaffold(
+      appBar: GreenpinAppbar.green(
+        leading: const SizedBox.shrink(),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppDimens.l),
+            child: Icon(
+              HomeTabEnum.cart.icon,
+              size: AppDimens.iconButtonSize,
+            ),
+          ),
+        ],
+        title: HomeTabEnum.cart.name,
+      ),
+      body: state.maybeMap(
+        orElse: () => const GreenpinLoader(),
+        idle: (idleState) => _Body(
+          data: idleState.data,
+          cubit: cubit,
+        ),
       ),
     );
   }
@@ -48,27 +67,25 @@ class _Body extends HookWidget {
 
     useEffect(() {
       productManagerCubit.init(data.products);
-    }, [productManagerCubit]);
+    }, [data.products.length]);
 
-    return SingleChildScrollView(
-      child: Column(
-        children: data.products
-            .map(
-              (product) => Padding(
-                padding: const EdgeInsets.all(AppDimens.m),
-                child: ProductRowContainer(
-                  product: product,
-                  productManagerCubit: productManagerCubit,
-                ),
+    return ListView.builder(
+      itemCount: data.products.length,
+      itemBuilder: (BuildContext context, int index) => AnimatedContainer(
+        duration: const Duration(seconds: AppDimens.animDurationInSeconds),
+        child: Column(
+          children: [
+            CupertinoButton(
+              padding: const EdgeInsets.all(AppDimens.m),
+              onPressed: () => AutoRouter.of(context).push(ProductPageRoute(product: data.products[index])),
+              child: ProductRowContainer(
+                product: data.products[index],
+                productManagerCubit: productManagerCubit,
               ),
-            )
-            .expand(
-              (element) => [
-                element,
-                const Divider(color: AppColors.gray),
-              ],
-            )
-            .toList(),
+            ),
+            const Divider(color: AppColors.gray),
+          ],
+        ),
       ),
     );
   }

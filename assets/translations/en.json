@@ -14,6 +14,7 @@
   "cont": "Continue",
   "pleaseInputValidEmail": "Please input valid email",
   "passwordsDoesNotMatch": "Passwords does not match",
+  "currentPasswordDoesNotMatch": "Invalid current password!",
   "emailAlreadyTaken": "Email is already taken",
   "invalidPassword": "Password must be at least 8 characters long, contain a number and an uppercase letter.",
   "fillYourData": "Fill your data",
@@ -60,5 +61,6 @@
   "incorrectPassword" : "Invalid password",
   "all" : "All ({})",
   "productDescription" : "Product description",
-  "nutritions" : "Nutritions"
+  "nutritions" : "Nutritions",
+  "phoneNumberRequirement": "Phone number is required to have minimum of nine digits!"
 }

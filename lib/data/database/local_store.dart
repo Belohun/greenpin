@@ -7,4 +7,8 @@ abstract class LocalStore<T> {
   Future update(T value);
 
   Future delete(T value);
+
+  Stream<bool> get stream;
+
+  void addToStream(bool value);
 }

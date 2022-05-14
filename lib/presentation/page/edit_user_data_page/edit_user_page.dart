@@ -23,16 +23,21 @@ import 'package:greenpin/presentation/widget/text_field/greenpin_text_field.dart
 class EditUserPage extends StatelessWidget {
   const EditUserPage({
     required this.userInfo,
+    required this.isEditUser,
     Key? key,
   }) : super(key: key);
 
   final UserInfo userInfo;
+  final bool isEditUser;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenpinAppbar.green(),
-      body: _EditUserBody(userInfo: userInfo),
+      body: _EditUserBody(
+        userInfo: userInfo,
+        isEditUser: isEditUser,
+      ),
     );
   }
 }
@@ -40,10 +45,12 @@ class EditUserPage extends StatelessWidget {
 class _EditUserBody extends HookWidget {
   const _EditUserBody({
     required this.userInfo,
+    required this.isEditUser,
     Key? key,
   }) : super(key: key);
 
   final UserInfo userInfo;
+  final bool isEditUser;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +67,7 @@ class _EditUserBody extends HookWidget {
         idle: (stateIdle) => _Body(
           data: stateIdle.data,
           cubit: cubit,
+          isUserData: isEditUser,
         ),
       ),
     );
@@ -86,11 +94,13 @@ class _Body extends StatelessWidget {
   const _Body({
     required this.data,
     required this.cubit,
+    required this.isUserData,
     Key? key,
   }) : super(key: key);
 
   final EditUserData data;
   final EditUserCubit cubit;
+  final bool isUserData;
 
   @override
   Widget build(BuildContext context) {
@@ -101,61 +111,64 @@ class _Body extends StatelessWidget {
             padding: const EdgeInsets.all(AppDimens.l),
             child: Column(
               children: [
-                GreenpinHeader(text: LocaleKeys.userData.tr()),
-                const SizedBox(height: AppDimens.l),
-                GreenpinTextField(
-                  initText: data.name,
-                  onChanged: cubit.nameChange,
-                  labelText: LocaleKeys.name.tr(),
-                ),
-                const SizedBox(height: AppDimens.xm),
-                GreenpinTextField(
-                  initText: data.surName,
-                  onChanged: cubit.surNameChange,
-                  labelText: LocaleKeys.surname.tr(),
-                ),
-                const SizedBox(height: AppDimens.xm),
-                GreenpinTextField(
-                  initText: data.phoneNumber,
-                  textInputType: TextInputType.number,
-                  onChanged: cubit.phoneNumberChange,
-                  labelText: LocaleKeys.phoneNumber.tr(),
-                ),
-                ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  itemCount: data.addressList.length,
-                  itemBuilder: (context, index) {
-                    return HookBuilder(
-                      builder: (BuildContext context) {
-                        final key = useMemoized(
-                          () => UniqueKey(),
-                          [data.addressList.length],
-                        );
+                if (isUserData) ...[
+                  GreenpinHeader(text: LocaleKeys.userData.tr()),
+                  const SizedBox(height: AppDimens.l),
+                  GreenpinTextField(
+                    initText: data.name,
+                    onChanged: cubit.nameChange,
+                    labelText: LocaleKeys.name.tr(),
+                  ),
+                  const SizedBox(height: AppDimens.xm),
+                  GreenpinTextField(
+                    initText: data.surName,
+                    onChanged: cubit.surNameChange,
+                    labelText: LocaleKeys.surname.tr(),
+                  ),
+                  const SizedBox(height: AppDimens.xm),
+                  GreenpinTextField(
+                    initText: data.phoneNumber,
+                    textInputType: TextInputType.number,
+                    onChanged: cubit.phoneNumberChange,
+                    labelText: LocaleKeys.phoneNumber.tr(),
+                  ),
+                ] else ...[
+                  ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    itemCount: data.addressList.length,
+                    itemBuilder: (context, index) {
+                      return HookBuilder(
+                        builder: (BuildContext context) {
+                          final key = useMemoized(
+                            () => UniqueKey(),
+                            [data.addressList.length],
+                          );
 
-                        return _AddressDataColumn(
-                          index: index,
-                          address: data.addressList[index],
-                          cubit: cubit,
-                          key: key,
-                        );
-                      },
-                    );
-                  },
-                ),
-                const SizedBox(height: AppDimens.l),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GreenpinIconButton(
-                      onPressed: cubit.createNewAddress,
-                      iconData: Icons.add,
-                    ),
-                    const SizedBox(width: AppDimens.ml),
-                    GreenpinSubHeader(text: LocaleKeys.addAddress.tr()),
-                  ],
-                ),
+                          return _AddressDataColumn(
+                            index: index,
+                            address: data.addressList[index],
+                            cubit: cubit,
+                            key: key,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  const SizedBox(height: AppDimens.l),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      GreenpinIconButton(
+                        onPressed: cubit.createNewAddress,
+                        iconData: Icons.add,
+                      ),
+                      const SizedBox(width: AppDimens.ml),
+                      GreenpinSubHeader(text: LocaleKeys.addAddress.tr()),
+                    ],
+                  ),
+                ],
                 const SizedBox(height: AppDimens.xxl),
               ],
             ),
@@ -190,7 +203,6 @@ class _AddressDataColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: AppDimens.xxl),
         GreenpinHeader(
           text: index > 0
               ? LocaleKeys.additionalAddress.tr()

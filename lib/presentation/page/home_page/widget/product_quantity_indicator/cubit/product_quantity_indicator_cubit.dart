@@ -4,27 +4,21 @@ import 'package:bloc/bloc.dart';
 import 'package:greenpin/domain/product/use_case/get_all_local_products_use_case.dart';
 import 'package:greenpin/domain/product/use_case/get_products_stream_use_case.dart';
 import 'package:greenpin/exports.dart';
-import 'package:greenpin/presentation/page/cart_page/cubit/cart_data.dart';
 import 'package:greenpin/presentation/widget/cubit_hooks.dart';
 import 'package:injectable/injectable.dart';
 
-part 'cart_state.dart';
+part 'product_quantity_indicator_state.dart';
 
-part 'cart_cubit.freezed.dart';
+part 'product_quantity_indicator_cubit.freezed.dart';
 
-@injectable
-class CartCubit extends Cubit<CartState> {
-  CartCubit(
+@singleton
+class ProductQuantityIndicatorCubit
+    extends Cubit<ProductQuantityIndicatorState> {
+  ProductQuantityIndicatorCubit(
     this._getAllLocalProductsUseCase,
     this._getProductsStreamUseCase,
-  ) : super(const CartState.loading()) {
-    _data = CartData.emptyData();
-    _productSubscription =
-        _getProductsStreamUseCase().listen(_productsListener);
-  }
-
-  void _productsListener(event) {
-    _updateProducts();
+  ) : super(const ProductQuantityIndicatorState.zeroProducts()) {
+    _productSubscription = _getProductsStreamUseCase().listen(_productListener);
   }
 
   final GetAllLocalProductsUseCase _getAllLocalProductsUseCase;
@@ -32,18 +26,27 @@ class CartCubit extends Cubit<CartState> {
 
   late final StreamSubscription _productSubscription;
 
-  late CartData _data;
+  var quantity = 0;
 
-  Future<void> init() async {
-    await _updateProducts();
+  Future<void> init() => _updateProducts();
+
+  void _productListener(event) {
+    _updateProducts();
   }
 
   Future<void> _updateProducts() async {
     final products = await _getAllLocalProductsUseCase();
-    if (_data.products.length != products.length) {
-      _data = CartData(products: products);
+    quantity = products.length;
+
+    _updateState();
+  }
+
+  void _updateState() {
+    if (quantity == 0) {
+      emit(const ProductQuantityIndicatorState.zeroProducts());
+    } else {
+      emit(ProductQuantityIndicatorState.idle(quantity));
     }
-    emit(CartState.idle(_data));
   }
 
   @override

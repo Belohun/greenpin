@@ -38,7 +38,7 @@ class RegisterPageSecondStep extends HookWidget {
   }
 }
 
-class _Body extends StatelessWidget {
+class _Body extends HookWidget {
   const _Body({
     required this.data,
     required this.cubit,
@@ -50,84 +50,129 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppDimens.l),
-            child: Column(
-              children: [
-                GreenpinHeader(text: LocaleKeys.fillYourData.tr()),
-                const SizedBox(height: AppDimens.s),
-                GreenpinSubHeader(text: LocaleKeys.dataRequiredToDelivery.tr()),
-                const SizedBox(height: AppDimens.ml),
-                GreenpinTextField(
-                  initText: data.secondStepData.name,
-                  onChanged: cubit.nameChange,
-                  labelText: LocaleKeys.name.tr(),
-                ),
-                const SizedBox(height: AppDimens.xm),
-                GreenpinTextField(
-                  initText: data.secondStepData.surName,
-                  onChanged: cubit.surNameChange,
-                  labelText: LocaleKeys.surname.tr(),
-                ),
-                const SizedBox(height: AppDimens.xm),
-                GreenpinTextField(
-                  initText: data.secondStepData.phoneNumber,
-                  textInputType: TextInputType.number,
-                  onChanged: cubit.phoneNumberChange,
-                  labelText: LocaleKeys.phoneNumber.tr(),
-                ),
-                ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  itemCount: data.secondStepData.addressList.length,
-                  itemBuilder: (context, index) {
-                    return HookBuilder(
-                      builder: (BuildContext context) {
-                        final key = useMemoized(
-                          () => UniqueKey(),
-                          [data.secondStepData.addressList.length],
-                        );
+    final scrollController = useScrollController(initialScrollOffset: 0);
 
-                        return _AddressDataColumn(
-                          index: index,
-                          addressData: data.secondStepData.addressList[index],
-                          cubit: cubit,
-                          key: key,
-                        );
-                      },
-                    );
-                  },
-                ),
-                const SizedBox(height: AppDimens.l),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GreenpinIconButton(
-                      onPressed: cubit.createNewAddress,
-                      iconData: Icons.add,
-                    ),
-                    const SizedBox(width: AppDimens.ml),
-                    GreenpinSubHeader(text: LocaleKeys.addAddress.tr()),
-                  ],
-                ),
-                const SizedBox(height: AppDimens.xxl),
-              ],
-            ),
-          ),
-          GreenpinPrimaryButton(
-            text: LocaleKeys.register.tr(),
-            onPressed: data.isValid ? cubit.register : null,
-          ),
-          const Image(
-            fit: BoxFit.fitWidth,
-            image: AssetImage('assets/img/vegtables_register_page.jpeg'),
-          ),
-        ],
+    return SingleChildScrollView(
+      controller: scrollController,
+      child: _ScrollContent(
+        data: data,
+        cubit: cubit,
+        scrollController: scrollController,
       ),
+    );
+  }
+}
+
+class _ScrollContent extends HookWidget {
+  const _ScrollContent({
+    required this.data,
+    required this.cubit,
+    required this.scrollController,
+    Key? key,
+  }) : super(key: key);
+
+  final RegisterPageData data;
+  final RegisterPageCubit cubit;
+  final ScrollController scrollController;
+
+  @override
+  Widget build(BuildContext context) {
+    useCubitListenerWithScrollController(
+      cubit,
+      _listener,
+      scrollController,
+    );
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppDimens.l),
+          child: Column(
+            children: [
+              GreenpinHeader(text: LocaleKeys.fillYourData.tr()),
+              const SizedBox(height: AppDimens.s),
+              GreenpinSubHeader(text: LocaleKeys.dataRequiredToDelivery.tr()),
+              const SizedBox(height: AppDimens.ml),
+              GreenpinTextField(
+                initText: data.secondStepData.name,
+                onChanged: cubit.nameChange,
+                labelText: LocaleKeys.name.tr(),
+              ),
+              const SizedBox(height: AppDimens.xm),
+              GreenpinTextField(
+                initText: data.secondStepData.surName,
+                onChanged: cubit.surNameChange,
+                labelText: LocaleKeys.surname.tr(),
+              ),
+              const SizedBox(height: AppDimens.xm),
+              GreenpinTextField(
+                initText: data.secondStepData.phoneNumber,
+                textInputType: TextInputType.number,
+                onChanged: cubit.phoneNumberChange,
+                errorText: data.secondStepData.phoneNumberError,
+                labelText: LocaleKeys.phoneNumber.tr(),
+              ),
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                itemCount: data.secondStepData.addressList.length,
+                itemBuilder: (context, index) {
+                  return HookBuilder(
+                    builder: (BuildContext context) {
+                      final key = useMemoized(
+                        () => UniqueKey(),
+                        [data.secondStepData.addressList.length],
+                      );
+
+                      return _AddressDataColumn(
+                        index: index,
+                        addressData: data.secondStepData.addressList[index],
+                        cubit: cubit,
+                        key: key,
+                      );
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: AppDimens.l),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GreenpinIconButton(
+                    onPressed: cubit.createNewAddress,
+                    iconData: Icons.add,
+                  ),
+                  const SizedBox(width: AppDimens.ml),
+                  GreenpinSubHeader(text: LocaleKeys.addAddress.tr()),
+                ],
+              ),
+              const SizedBox(height: AppDimens.xxl),
+            ],
+          ),
+        ),
+        GreenpinPrimaryButton(
+          text: LocaleKeys.register.tr(),
+          onPressed: data.isValid ? cubit.register : null,
+        ),
+        const Image(
+          fit: BoxFit.fitWidth,
+          image: AssetImage('assets/img/vegtables_register_page.jpeg'),
+        ),
+      ],
+    );
+  }
+
+  void _listener(
+    RegisterPageCubit cubit,
+    RegisterPageState current,
+    BuildContext context,
+    ScrollController controller,
+  ) {
+    current.maybeMap(
+      orElse: () {},
+      scrollToStart: (_) =>
+          controller.jumpTo(controller.position.minScrollExtent),
     );
   }
 }

@@ -7,13 +7,13 @@ part 'edit_user_data_dto.g.dart';
 class EditUserDataDto {
   EditUserDataDto({
     required this.name,
-    required this.surName,
+    required this.surname,
     required this.phoneNumber,
     required this.addressList,
   });
 
   final String name;
-  final String surName;
+  final String surname;
   final String phoneNumber;
   final List<AddressDto> addressList;
 

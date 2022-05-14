@@ -64,12 +64,11 @@ class CategoriesPage extends HookWidget {
             state.maybeMap(
               loading: (_) => const GreenpinLoader(),
               orElse: () => const SizedBox(),
-              idle: (idleState) =>
-                  _Body(
-                    cubit: cubit,
-                    data: idleState.data,
-                    productCategory: category,
-                  ),
+              idle: (idleState) => _Body(
+                cubit: cubit,
+                data: idleState.data,
+                productCategory: category,
+              ),
             ),
             SafeArea(child: Container()),
           ],
@@ -78,8 +77,8 @@ class CategoriesPage extends HookWidget {
     );
   }
 
-  void _listener(CategoriesCubit cubit, CategoriesState current,
-      BuildContext context) {
+  void _listener(
+      CategoriesCubit cubit, CategoriesState current, BuildContext context) {
     current.maybeMap(
         orElse: () {},
         error: (errorState) =>
@@ -109,22 +108,21 @@ class _Body extends HookWidget {
 
     return Column(
       children: data.subcategoryList
-          .map((subcategory) =>
-          Column(
-            children: [
-              _SubcategoryHeader(
-                subcategory: subcategory,
-                productCategory: productCategory,
-                productManagerCubit: productManagerCubit,
-                data: data,
-              ),
-              _SubcategoryContent(
-                productCategory: productCategory,
-                subcategory: subcategory,
-                productManagerCubit: productManagerCubit,
-              ),
-            ],
-          ))
+          .map((subcategory) => Column(
+                children: [
+                  _SubcategoryHeader(
+                    subcategory: subcategory,
+                    productCategory: productCategory,
+                    productManagerCubit: productManagerCubit,
+                    data: data,
+                  ),
+                  _SubcategoryContent(
+                    productCategory: productCategory,
+                    subcategory: subcategory,
+                    productManagerCubit: productManagerCubit,
+                  ),
+                ],
+              ))
           .toList(),
     );
   }
@@ -152,25 +150,22 @@ class _SubcategoryContent extends StatelessWidget {
           child: Row(
             children: subcategory.productResponseList
                 .map(
-                  (product) =>
-                  ProductContainer(
-                    onRefresh:  productManagerCubit.updateProducts,
+                  (product) => ProductContainer(
+                    onRefresh: productManagerCubit.updateProducts,
                     subcategory: subcategory,
                     productCategory: productCategory,
                     productManagerCubit: productManagerCubit,
                     product: product,
                     containerSize: (constraints.maxWidth / 2) -
                         (AppDimens.l + AppDimens.m),
-
                   ),
-            )
+                )
                 .expand(
-                  (element) =>
-              [
-                element,
-                const SizedBox(width: AppDimens.l),
-              ],
-            )
+                  (element) => [
+                    element,
+                    const SizedBox(width: AppDimens.l),
+                  ],
+                )
                 .toList(),
           ),
         );
@@ -208,14 +203,13 @@ class ProductContainer extends StatelessWidget {
             padding: EdgeInsets.zero,
             onPressed: () async {
               await AutoRouter.of(context).push(
-                  ProductPageRoute(
-                    product: product,
-                    productCategory: productCategory,
-                    subcategory: subcategory,
-                  ),
-                );
+                ProductPageRoute(
+                  product: product,
+                  productCategory: productCategory,
+                  subcategory: subcategory,
+                ),
+              );
               onRefresh();
-
             },
             child: GreenpinCachedImage(
               url: product.imageUrl,
@@ -226,14 +220,18 @@ class ProductContainer extends StatelessWidget {
           const SizedBox(height: AppDimens.s),
           Text(
             product.price.formattedPriceString(),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: AppTypography.bodyText1Bold.copyWith(color: AppColors.gray),
           ),
           const SizedBox(height: AppDimens.s),
           Text(
             product.name,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: AppTypography.smallText1,
           ),
-          const SizedBox(height: AppDimens.s),
+          const SizedBox(height: AppDimens.ss),
           ProductManagerRow(
             product: product,
             cubit: productManagerCubit,
@@ -261,21 +259,22 @@ class ProductRowContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context, constraints) =>
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _ProductImage(
-                product: product,
-                productCategory: productCategory,
-                subcategory: subcategory,
-                constraints: constraints,
-              ),
-              const SizedBox(width: AppDimens.m),
-              _ProductColumnManager(
-                  product: product, productManagerCubit: productManagerCubit)
-            ],
+      builder: (context, constraints) => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _ProductImage(
+            product: product,
+            productCategory: productCategory,
+            subcategory: subcategory,
+            constraints: constraints,
           ),
+          const SizedBox(width: AppDimens.m),
+          _ProductColumnManager(
+            product: product,
+            productManagerCubit: productManagerCubit,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -297,25 +296,23 @@ class ProductRowContainerReserved extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context, constraints) =>
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _ProductColumnManager(
-                  product: product, productManagerCubit: productManagerCubit),
-              const SizedBox(width: AppDimens.m),
-              _ProductImage(
-                product: product,
-                productCategory: productCategory,
-                subcategory: subcategory,
-                constraints: constraints,
-              ),
-            ],
+      builder: (context, constraints) => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _ProductColumnManager(
+              product: product, productManagerCubit: productManagerCubit),
+          const SizedBox(width: AppDimens.m),
+          _ProductImage(
+            product: product,
+            productCategory: productCategory,
+            subcategory: subcategory,
+            constraints: constraints,
           ),
+        ],
+      ),
     );
   }
 }
-
 
 class _ProductImage extends StatelessWidget {
   const _ProductImage({
@@ -358,11 +355,11 @@ class _ProductColumnManager extends StatelessWidget {
         aspectRatio: 1,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-
           children: [
             Text(
               product.price.formattedPriceString(),
-              style: AppTypography.bodyText1Bold.copyWith(color: AppColors.gray),
+              style:
+                  AppTypography.bodyText1Bold.copyWith(color: AppColors.gray),
             ),
             const SizedBox(height: AppDimens.s),
             Text(
@@ -408,7 +405,7 @@ class _SubcategoryHeader extends StatelessWidget {
               subcategory.category.name,
               overflow: TextOverflow.ellipsis,
               style:
-              AppTypography.bodyText1Bold.copyWith(color: AppColors.gray),
+                  AppTypography.bodyText1Bold.copyWith(color: AppColors.gray),
             ),
           ),
           GreenpinTextButton(
@@ -424,7 +421,7 @@ class _SubcategoryHeader extends StatelessWidget {
               await productManagerCubit.init(data.allProducts);
             },
             style:
-            AppTypography.bodyText1.copyWith(color: AppColors.lightGreen),
+                AppTypography.bodyText1.copyWith(color: AppColors.lightGreen),
           ),
         ],
       ),
@@ -443,12 +440,10 @@ class _NavigationRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: AutoRouter
-          .of(context)
+      children: AutoRouter.of(context)
           .stack
           .map(
-            (e) =>
-            GreenpinPrimaryButton.outlined(
+            (e) => GreenpinPrimaryButton.outlined(
               padding: const EdgeInsets.only(left: AppDimens.m),
               insidePadding: const EdgeInsets.symmetric(
                 vertical: AppDimens.s,
@@ -459,18 +454,22 @@ class _NavigationRow extends StatelessWidget {
               onPressed: () =>
                   AutoRouter.of(context).popUntilRouteWithName(e.name ?? ''),
             ),
-      )
+          )
           .toList(),
     );
   }
 }
 
-String mapPageNameToShortcut(String? pageName,
-    String category,
-    String product,
-    String subCategory,) {
+String mapPageNameToShortcut(
+  String? pageName,
+  String category,
+  String product,
+  String subCategory,
+) {
   switch (pageName) {
-    case HomePageRoute.name:
+    case CartPageRoute.name:
+      return LocaleKeys.cart.tr();
+    case ShoppingPageRoute.name:
       return LocaleKeys.shopping.tr();
     case CategoriesPageRoute.name:
       return category;
