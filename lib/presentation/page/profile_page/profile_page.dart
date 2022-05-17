@@ -310,11 +310,11 @@ class _InfoColumn extends StatelessWidget {
             children: [
               Text(
                 name,
-                style: AppTypography.bodyText1Bold,
+                style: AppTypography.bodyText1,
               ),
               Text(
                 info,
-                style: AppTypography.bodyText1,
+                style: AppTypography.bodyText1Bold,
               ),
             ],
           ),

@@ -13,6 +13,7 @@ class EditUserData with _$EditUserData {
     required String surName,
     required String phoneNumber,
     required List<AddressData> addressList,
+    required String? phoneNumberError,
   }) = _EditUserData;
 
   factory EditUserData.fromUserInfo(UserInfo userInfo) => _EditUserData(
@@ -20,6 +21,7 @@ class EditUserData with _$EditUserData {
         surName: userInfo.surname,
         phoneNumber: userInfo.phoneNumber,
         addressList: userInfo.address,
+        phoneNumberError: null,
       );
 }
 

@@ -6,7 +6,10 @@ import 'package:greenpin/data/product/mapper/product_entity_mapper.dart';
 import 'package:greenpin/domain/product/model/product.dart';
 
 class ProductDataStore implements LocalStore<Product> {
-  ProductDataStore(this._productDataSource, this._entityMapper);
+  ProductDataStore(
+    this._productDataSource,
+    this._entityMapper,
+  );
 
   final HiveDataSource<ProductEntity> _productDataSource;
   final ProductEntityMapper _entityMapper;
@@ -48,4 +51,10 @@ class ProductDataStore implements LocalStore<Product> {
   @override
   Stream<bool> get stream =>
       _productsStreamController.stream.asBroadcastStream();
+
+  @override
+  Future<void> deleteAll() {
+    addToStream(true);
+    return _productDataSource.clear();
+  }
 }

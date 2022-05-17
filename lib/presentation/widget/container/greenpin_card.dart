@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:greenpin/presentation/style/app_colors.dart';
-import 'package:greenpin/presentation/style/app_dimens.dart';
 import 'package:greenpin/presentation/style/app_shadows.dart';
 
 class GreenpinCard extends StatelessWidget {
   const GreenpinCard({
     required this.child,
     this.shadow = AppShadows.cardShadow,
-    this.borderRadius = const BorderRadius.all(Radius.circular(AppDimens.cardRadius)),
+    this.borderRadius = BorderRadius.zero,
     this.footer,
     this.height,
     this.width,
+    this.padding,
     Key? key,
   }) : super(key: key);
 
@@ -20,16 +20,18 @@ class GreenpinCard extends StatelessWidget {
   final double? width;
   final Widget? footer;
   final BorderRadiusGeometry borderRadius;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) => Container(
-    height: height,
-    width: width,
-    decoration: BoxDecoration(
-      borderRadius: borderRadius,
-      color: AppColors.white,
-      boxShadow: [shadow],
-    ),
-    child: child,
-  );
+        padding: padding,
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+          borderRadius: borderRadius,
+          color: AppColors.white,
+          boxShadow: [shadow],
+        ),
+        child: child,
+      );
 }

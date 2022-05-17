@@ -10,7 +10,7 @@ class ProductCategoryMapper
   ProductCategory from(ProductCategoryDto data) {
     return ProductCategory(
       name: data.name,
-      url: data.url ?? 'https://picsum.photos/200/300?random=3',
+      url: data.url ?? '',
       id: data.id,
     );
   }

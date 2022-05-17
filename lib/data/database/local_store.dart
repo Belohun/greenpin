@@ -8,6 +8,8 @@ abstract class LocalStore<T> {
 
   Future delete(T value);
 
+  Future deleteAll();
+
   Stream<bool> get stream;
 
   void addToStream(bool value);

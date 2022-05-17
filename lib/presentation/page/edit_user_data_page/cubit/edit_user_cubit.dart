@@ -28,6 +28,11 @@ class EditUserCubit extends Cubit<EditUserState> {
   late EditUserData _data;
 
   Future<void> updateUserData() async {
+    if (_data.phoneNumber.length < 9) {
+      _data = _data.copyWith(
+          phoneNumberError: LocaleKeys.phoneNumberRequirement.tr());
+    }
+
     if (_data.isDeliveryAddressSelected) {
       if (_data.isMoreThatOneDeliveryAddressSelected) {
         emit(EditUserState.error(LocaleKeys.onlyOneAddressCanBe.tr()));
@@ -51,6 +56,7 @@ class EditUserCubit extends Cubit<EditUserState> {
     } else {
       emit(EditUserState.error(LocaleKeys.deliveryAddressMustBeSelected.tr()));
     }
+    _updateState();
   }
 
   void nameChange(String text) {
@@ -68,7 +74,10 @@ class EditUserCubit extends Cubit<EditUserState> {
   }
 
   void phoneNumberChange(String text) {
-    _data = _data.copyWith(phoneNumber: text);
+    _data = _data.copyWith(
+      phoneNumber: text,
+      phoneNumberError: null,
+    );
     _updateState();
   }
 

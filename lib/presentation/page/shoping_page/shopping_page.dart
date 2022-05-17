@@ -98,19 +98,25 @@ class _ProductCategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GreenpinCachedImage(
-          width: width,
-          height: width,
-          url: productCategory.url,
-        ),
-        const SizedBox(height: AppDimens.s),
-        Text(
-          productCategory.name,
-          style: AppTypography.bodyText1,
-        ),
-      ],
+    return SizedBox(
+      width: width,
+      child: Column(
+        children: [
+          GreenpinCachedImage(
+            width: width,
+            height: width,
+            url: productCategory.url,
+          ),
+          const SizedBox(height: AppDimens.s),
+          Text(
+            productCategory.name,
+            style: AppTypography.smallerBodyText,
+            maxLines: 1,
+            softWrap: false,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
     );
   }
 }

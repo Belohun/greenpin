@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:greenpin/domain/product/use_case/clear_local_products_use_case.dart';
 import 'package:greenpin/domain/product/use_case/get_all_local_products_use_case.dart';
 import 'package:greenpin/domain/product/use_case/get_products_stream_use_case.dart';
 import 'package:greenpin/exports.dart';
@@ -17,6 +18,7 @@ class CartCubit extends Cubit<CartState> {
   CartCubit(
     this._getAllLocalProductsUseCase,
     this._getProductsStreamUseCase,
+    this._clearLocalProductsUseCase,
   ) : super(const CartState.loading()) {
     _data = CartData.emptyData();
     _productSubscription =
@@ -29,6 +31,7 @@ class CartCubit extends Cubit<CartState> {
 
   final GetAllLocalProductsUseCase _getAllLocalProductsUseCase;
   final GetProductsStreamUseCase _getProductsStreamUseCase;
+  final ClearLocalProductsUseCase _clearLocalProductsUseCase;
 
   late final StreamSubscription _productSubscription;
 
@@ -45,6 +48,8 @@ class CartCubit extends Cubit<CartState> {
     }
     emit(CartState.idle(_data));
   }
+
+  Future<void> clearCart() => _clearLocalProductsUseCase();
 
   @override
   Future<void> close() async {

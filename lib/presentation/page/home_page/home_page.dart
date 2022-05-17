@@ -72,7 +72,6 @@ class _Body extends HookWidget {
                 ),
               ),
               GreenpinCard(
-                borderRadius: BorderRadius.zero,
                 child: SafeArea(
                   top: false,
                   child: Padding(
@@ -145,10 +144,13 @@ class _BottomBarButton extends HookWidget {
                     top: 0, right: 0, child: ProductQuantityIndicatorWidget()),
             ],
           ),
-          Text(
-            tab.name,
-            style: AppTypography.smallText1.copyWith(
-              color: isCurrent ? AppColors.primary : AppColors.gray,
+          Padding(
+            padding: const EdgeInsets.only(right: AppDimens.s),
+            child: Text(
+              tab.name,
+              style: AppTypography.smallText1.copyWith(
+                color: isCurrent ? AppColors.primary : AppColors.gray,
+              ),
             ),
           ),
         ],

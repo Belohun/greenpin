@@ -101,4 +101,7 @@ class AppDimens {
   ///36
   static const biggerButtonSize = 36.0;
 
+  ///18
+  static const smallerBodyText = 18.0;
+
 }

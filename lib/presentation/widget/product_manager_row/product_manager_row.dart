@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:greenpin/domain/product/model/product.dart';
@@ -26,7 +27,7 @@ class ProductManagerRow extends HookWidget {
       () => state.maybeMap(
         orElse: () => product,
         idle: (idleState) => idleState.data.products
-            .firstWhere((element) => element.id == product.id),
+            .firstWhereOrNull((element) => element.id == product.id),
       ),
       [state],
     );
@@ -38,14 +39,16 @@ class ProductManagerRow extends HookWidget {
           size: AppDimens.biggerButtonSize,
           background: AppColors.white,
           iconColor: AppColors.lightGreen,
-          onPressed: _product.quantity == 0 ? null : () => cubit.decreaseQuantity(_product),
+          onPressed: (_product?.quantity ?? 0) == 0
+              ? null
+              : () => cubit.decreaseQuantity(_product!),
           shape: BoxShape.circle,
           iconData: Icons.remove,
         ),
         state.maybeMap(
           orElse: () => const SizedBox(),
           idle: (idleState) => Text(
-            _product.quantity.toString(),
+            _product?.quantity.toString() ?? '0',
             style: AppTypography.bodyText1Bold.copyWith(color: AppColors.gray),
           ),
           loading: (_) => const GreenpinLoader(),
@@ -53,7 +56,8 @@ class ProductManagerRow extends HookWidget {
         GreenpinIconButton(
           size: AppDimens.biggerButtonSize,
           background: AppColors.lightGreen,
-          onPressed: () => cubit.increaseQuantity(_product),
+          onPressed:
+              _product != null ? () => cubit.increaseQuantity(_product) : null,
           iconColor: AppColors.white,
           iconData: Icons.add,
           shape: BoxShape.circle,

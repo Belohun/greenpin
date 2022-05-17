@@ -11,3 +11,7 @@ class CartData with _$CartData {
 
   factory CartData.emptyData() => _CartData(products: []);
 }
+
+extension CartDataExtension on CartData {
+  double get productsPriceSum => products.map((e) => e.price).sum;
+}

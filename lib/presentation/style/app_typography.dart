@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:greenpin/presentation/style/app_colors.dart';
+import 'package:greenpin/presentation/style/app_dimens.dart';
 
 class AppTypography {
   const AppTypography._();
@@ -21,6 +22,8 @@ class AppTypography {
         letterSpacing: 0,
         color: AppColors.lightGray,
       );
+
+  static TextStyle get smallerBodyText => bodyText1.copyWith(fontSize: AppDimens.smallerBodyText);
 
   static TextStyle get headline1 => GoogleFonts.lato(
         fontSize: 30,

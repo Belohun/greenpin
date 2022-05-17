@@ -62,5 +62,6 @@
   "all" : "All ({})",
   "productDescription" : "Product description",
   "nutritions" : "Nutritions",
-  "phoneNumberRequirement": "Phone number is required to have minimum of nine digits!"
+  "phoneNumberRequirement": "Phone number is required to have minimum of nine digits!",
+  "clear" : "Clear"
 }

@@ -6,20 +6,13 @@ class HiveDataSource<T extends HiveEntity<T>> {
 
   HiveDataSource(this._hiveBox);
 
-  Future create(T input) async {
-    return _hiveBox.put(input.uuid, input);
-  }
+  Future<void> create(T input) => _hiveBox.put(input.uuid, input);
 
-  Future delete(String id) async {
-    return _hiveBox.delete(id);
-  }
+  Future<void> delete(String id) => _hiveBox.delete(id);
 
-  Future<List<T>> all() async {
-    return _hiveBox.values.toList();
-  }
+  Future<List<T>> all() async => _hiveBox.values.toList();
 
-  Future update(T input) async {
-    return _hiveBox.put(input.uuid, input);
-  }
+  Future<void> update(T input) => _hiveBox.put(input.uuid, input);
 
+  Future<void> clear() => _hiveBox.clear();
 }
