@@ -10,7 +10,7 @@ class ProductCategoryMapper
   ProductCategory from(ProductCategoryDto data) {
     return ProductCategory(
       name: data.name,
-      url: data.url ?? '',
+      url: data.imageUrl ?? '',
       id: data.id,
     );
   }

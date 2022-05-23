@@ -1,13 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:greenpin/core/bloc/simple_bloc_observer.dart';
+import 'package:greenpin/core/di_config.dart';
 import 'package:greenpin/data/product/entity/product_entity.dart';
+import 'package:greenpin/data/user/entity/address_data_entity.dart';
+import 'package:greenpin/data/user/entity/user_info_entity.dart';
 import 'package:greenpin/domain/language/language_code.dart';
+import 'package:greenpin/domain/user/model/role.dart';
 import 'package:greenpin/exports.dart';
 import 'package:greenpin/presentation/greenpin_app.dart';
-import 'package:greenpin/presentation/routing/main_router.gr.dart';
-import 'package:greenpin/core/di_config.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 Future<void> runMain(String env) async {
@@ -32,5 +33,9 @@ Future<void> runMain(String env) async {
 Future<void> initHive() async {
   await Hive.initFlutter();
 
-  Hive.registerAdapter(ProductEntityAdapter());
+  Hive
+    ..registerAdapter(ProductEntityAdapter())
+    ..registerAdapter(UserInfoEntityAdapter())
+    ..registerAdapter(RoleAdapter())
+    ..registerAdapter(AddressDataEntityAdapter());
 }

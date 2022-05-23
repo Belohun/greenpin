@@ -10,6 +10,7 @@ import 'package:greenpin/presentation/page/home_page/model/home_tab_enum.dart';
 import 'package:greenpin/presentation/style/app_colors.dart';
 import 'package:greenpin/presentation/style/app_dimens.dart';
 import 'package:greenpin/presentation/style/app_typography.dart';
+import 'package:greenpin/presentation/widget/button/greenpin_icon_button.dart';
 import 'package:greenpin/presentation/widget/button/greenpin_text_button.dart';
 import 'package:greenpin/presentation/widget/container/greenpin_card.dart';
 import 'package:greenpin/presentation/widget/container/greenpin_loading_container.dart';
@@ -114,18 +115,41 @@ class _Body extends HookWidget {
             itemBuilder: (BuildContext context, int index) => AnimatedContainer(
               duration:
                   const Duration(seconds: AppDimens.animDurationInSeconds),
-              child: Column(
+              child: Stack(
                 children: [
-                  CupertinoButton(
-                    padding: const EdgeInsets.all(AppDimens.m),
-                    onPressed: () => AutoRouter.of(context)
-                        .push(ProductPageRoute(product: data.products[index])),
-                    child: ProductRowContainer(
-                      product: data.products[index],
-                      productManagerCubit: productManagerCubit,
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppDimens.m,
+                        ),
+                        child: CupertinoButton(
+                          padding: const EdgeInsets.all(AppDimens.m),
+                          onPressed: () => AutoRouter.of(context).push(
+                              ProductPageRoute(product: data.products[index])),
+                          child: ProductRowContainer(
+                            product: data.products[index],
+                            productManagerCubit: productManagerCubit,
+                          ),
+                        ),
+                      ),
+                      const Divider(color: AppColors.gray),
+                    ],
+                  ),
+                  Positioned(
+                    top: AppDimens.s,
+                    left: AppDimens.m,
+                    child: GreenpinIconButton(
+                      size: AppDimens.biggerButtonSize,
+                      onPressed: () =>
+                          cubit.deleteProduct(data.products[index]),
+                      iconData: Icons.delete_outlined,
+                      iconColor: AppColors.lightGray,
+                      background: AppColors.white,
+                      shape: BoxShape.circle,
+                      borderColor: AppColors.white,
                     ),
                   ),
-                  const Divider(color: AppColors.gray),
                 ],
               ),
             ),

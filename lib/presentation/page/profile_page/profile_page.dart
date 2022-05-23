@@ -8,6 +8,7 @@ import 'package:greenpin/presentation/page/profile_page/cubit/profile_cubit.dart
 import 'package:greenpin/presentation/style/app_colors.dart';
 import 'package:greenpin/presentation/style/app_dimens.dart';
 import 'package:greenpin/presentation/style/app_typography.dart';
+import 'package:greenpin/presentation/util/snackbar_util.dart';
 import 'package:greenpin/presentation/widget/button/greenpin_text_button.dart';
 import 'package:greenpin/presentation/widget/container/greenpin_loading_container.dart';
 import 'package:greenpin/presentation/widget/cubit_hooks.dart';
@@ -25,6 +26,8 @@ class ProfilePage extends HookWidget {
     useMemoized(() {
       cubit.init();
     }, [cubit]);
+
+    useCubitListener(cubit, _listener);
 
     return Scaffold(
       appBar: GreenpinAppbar.green(
@@ -68,6 +71,22 @@ class ProfilePage extends HookWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _listener(
+    ProfileCubit cubit,
+    ProfileState current,
+    BuildContext context,
+  ) {
+    current.maybeMap(
+      orElse: () {},
+      error: (errorState) {
+        SnackBarUtils.showErrorSnackBar(
+          context,
+          errorState.errorMessage,
+        );
+      },
     );
   }
 }

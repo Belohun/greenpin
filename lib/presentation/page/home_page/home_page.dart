@@ -9,6 +9,7 @@ import 'package:greenpin/presentation/page/home_page/widget/product_quantity_ind
 import 'package:greenpin/presentation/style/app_colors.dart';
 import 'package:greenpin/presentation/style/app_dimens.dart';
 import 'package:greenpin/presentation/style/app_typography.dart';
+import 'package:greenpin/presentation/widget/button/greenpin_primary_button.dart';
 import 'package:greenpin/presentation/widget/container/greenpin_card.dart';
 import 'package:greenpin/presentation/widget/cubit_hooks.dart';
 import 'package:greenpin/presentation/widget/logout/logout_widget.dart';
@@ -63,6 +64,7 @@ class _Body extends HookWidget {
         builder: (context, child, animation) {
           final tabsRouter = AutoTabsRouter.of(context);
 
+
           return Column(
             children: [
               Expanded(
@@ -76,18 +78,38 @@ class _Body extends HookWidget {
                   top: false,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: AppDimens.ss),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: HomeTabEnum.values
-                          .map(
-                            (tab) => _BottomBarButton(
-                              cubit: cubit,
-                              tab: tab,
-                              currentTab: idleState.currentTab,
-                              tabsRouter: tabsRouter,
-                            ),
-                          )
-                          .toList(),
+                    child: Column(
+                      children: [
+                      if(AutoRouter.of(context).currentChild?.name == CartPageRoute.name)  Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: AppDimens.m),
+                            child: Row(
+                              children: const [
+                                Spacer(),
+                                Expanded(
+                                    flex: 3,
+                                    child: GreenpinPrimaryButton(
+                                        insidePadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: AppDimens.ss),
+                                        text: 'Dalej')),
+                                Spacer(),
+                              ],
+                            )),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: HomeTabEnum.values
+                              .map(
+                                (tab) => _BottomBarButton(
+                                  cubit: cubit,
+                                  tab: tab,
+                                  currentTab: idleState.currentTab,
+                                  tabsRouter: tabsRouter,
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ],
                     ),
                   ),
                 ),

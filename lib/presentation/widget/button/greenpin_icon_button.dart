@@ -11,6 +11,7 @@ class GreenpinIconButton extends StatelessWidget {
     this.iconColor = AppColors.white,
     this.shape,
     this.size = AppDimens.iconButtonSize,
+    this.borderColor = AppColors.lightGreen,
     Key? key,
   }) : super(key: key);
 
@@ -20,6 +21,7 @@ class GreenpinIconButton extends StatelessWidget {
   final Color iconColor;
   final BoxShape? shape;
   final double size;
+  final Color borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class GreenpinIconButton extends StatelessWidget {
           width: size,
           height: size,
           decoration: BoxDecoration(
-            border: Border.all(color: AppColors.lightGreen),
+            border: Border.all(color: borderColor),
             color: background,
             shape: shape ?? BoxShape.rectangle,
             borderRadius: shape != null

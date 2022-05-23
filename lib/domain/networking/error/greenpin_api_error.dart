@@ -24,14 +24,19 @@ class GreenpinApiError with _$GreenpinApiError {
 extension GreenApiErrorExtension on GreenpinApiError {
   void handleError({
     required Function(String translatedErrorMessage) orElse,
-    required Function(InnerError innerError) innerErrors,
+    Function(InnerError innerError)? innerErrors,
   }) {
     maybeMap(
       orElse: () => orElse(LocaleKeys.somethingWentWrong.tr()),
       timeout: (_) => orElse(LocaleKeys.connectionTimeOut.tr()),
       unknownError: (_) => orElse(LocaleKeys.somethingWentWrong.tr()),
-      fromResponse: (fromResponse) =>
-          fromResponse.innerErrors.forEach(innerErrors),
+      fromResponse: (fromResponse) {
+        if (innerErrors != null) {
+          fromResponse.innerErrors.forEach(innerErrors);
+        } else {
+          orElse(LocaleKeys.somethingWentWrong.tr());
+        }
+      },
     );
   }
 }
